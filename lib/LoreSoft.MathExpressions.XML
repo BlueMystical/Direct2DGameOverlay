@@ -1,0 +1,801 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>LoreSoft.MathExpressions</name>
+    </assembly>
+    <members>
+        <member name="T:LoreSoft.MathExpressions.ConvertExpression">
+            <summary>
+            A class representing unit convertion expressions.
+            </summary>
+        </member>
+        <member name="T:LoreSoft.MathExpressions.ExpressionBase">
+            <summary>The base class for expressions</summary>
+        </member>
+        <member name="T:LoreSoft.MathExpressions.IExpression">
+            <summary>
+            The interface used when running expressions
+            </summary>
+        </member>
+        <member name="P:LoreSoft.MathExpressions.IExpression.ArgumentCount">
+            <summary>Gets the number of arguments this expression uses.</summary>
+            <value>The argument count.</value>
+        </member>
+        <member name="P:LoreSoft.MathExpressions.IExpression.Evaluate">
+            <summary>Gets or sets the evaluate delegate.</summary>
+            <value>The evaluate delegate.</value>
+        </member>
+        <member name="M:LoreSoft.MathExpressions.ExpressionBase.Validate(System.Double[])">
+            <summary>Validates the specified numbers for the expression.</summary>
+            <param name="numbers">The numbers to validate.</param>
+            <exception cref="T:System.ArgumentNullException">When numbers is null.</exception>
+            <exception cref="T:System.ArgumentException">When the length of numbers do not equal <see cref="P:LoreSoft.MathExpressions.ExpressionBase.ArgumentCount"/>.</exception>
+        </member>
+        <member name="P:LoreSoft.MathExpressions.ExpressionBase.ArgumentCount">
+            <summary>Gets the number of arguments this expression uses.</summary>
+            <value>The argument count.</value>
+        </member>
+        <member name="P:LoreSoft.MathExpressions.ExpressionBase.Evaluate">
+            <summary>Gets or sets the evaluate delegate.</summary>
+            <value>The evaluate delegate.</value>
+        </member>
+        <member name="F:LoreSoft.MathExpressions.ConvertExpression.ExpressionFormat">
+            <summary>The format of a convertion expression.</summary>
+        </member>
+        <member name="M:LoreSoft.MathExpressions.ConvertExpression.#ctor(System.String)">
+            <summary>Initializes a new instance of the <see cref="T:LoreSoft.MathExpressions.ConvertExpression"/> class.</summary>
+            <param name="expression">The convertion expression for this instance.</param>
+        </member>
+        <member name="M:LoreSoft.MathExpressions.ConvertExpression.Convert(System.Double[])">
+            <summary>Convert the numbers to the new unit.</summary>
+            <param name="numbers">The numbers used in the convertion.</param>
+            <returns>The result of the convertion execution.</returns>
+            <exception cref="T:System.ArgumentNullException">When numbers is null.</exception>
+            <exception cref="T:System.ArgumentException">When the length of numbers do not equal <see cref="P:LoreSoft.MathExpressions.ConvertExpression.ArgumentCount"/>.</exception>
+        </member>
+        <member name="M:LoreSoft.MathExpressions.ConvertExpression.IsConvertExpression(System.String)">
+            <summary>
+             Determines whether the specified expression name is for unit convertion.
+            </summary>
+            <param name="expression">The expression to check.</param>
+            <returns><c>true</c> if the specified expression is a unit convertion; otherwise, <c>false</c>.</returns>
+        </member>
+        <member name="M:LoreSoft.MathExpressions.ConvertExpression.ToString">
+            <summary>
+            Returns a <see cref="T:System.String"/> that represents the current <see cref="T:System.Object"/>.
+            </summary>
+            <returns>
+            A <see cref="T:System.String"/> that represents the current <see cref="T:System.Object"/>.
+            </returns>
+            <filterPriority>2</filterPriority>
+        </member>
+        <member name="P:LoreSoft.MathExpressions.ConvertExpression.ArgumentCount">
+            <summary>Gets the number of arguments this expression uses.</summary>
+            <value>The argument count.</value>
+        </member>
+        <member name="T:LoreSoft.MathExpressions.FunctionExpression">
+            <summary>
+            A class representing the System.Math function expressions
+            </summary>
+        </member>
+        <member name="F:LoreSoft.MathExpressions.FunctionExpression.mathFunctions">
+            <summary>The supported math functions by this class.</summary>
+        </member>
+        <member name="M:LoreSoft.MathExpressions.FunctionExpression.#ctor(System.String)">
+            <summary>Initializes a new instance of the <see cref="T:LoreSoft.MathExpressions.FunctionExpression"/> class.</summary>
+            <param name="function">The function name for this instance.</param>
+        </member>
+        <member name="M:LoreSoft.MathExpressions.FunctionExpression.#ctor(System.String,System.Boolean)">
+            <summary>Initializes a new instance of the <see cref="T:LoreSoft.MathExpressions.FunctionExpression"/> class.</summary>
+            <param name="function">The function.</param>
+            <param name="validate">if set to <c>true</c> to validate the function name.</param>
+        </member>
+        <member name="M:LoreSoft.MathExpressions.FunctionExpression.Execute(System.Double[])">
+            <summary>Executes the function on specified numbers.</summary>
+            <param name="numbers">The numbers used in the function.</param>
+            <returns>The result of the function execution.</returns>
+            <exception cref="T:System.ArgumentNullException">When numbers is null.</exception>
+            <exception cref="T:System.ArgumentException">When the length of numbers do not equal <see cref="P:LoreSoft.MathExpressions.FunctionExpression.ArgumentCount"/>.</exception>
+        </member>
+        <member name="M:LoreSoft.MathExpressions.FunctionExpression.IsFunction(System.String)">
+            <summary>Determines whether the specified function name is a function.</summary>
+            <param name="function">The function name.</param>
+            <returns><c>true</c> if the specified name is a function; otherwise, <c>false</c>.</returns>
+        </member>
+        <member name="M:LoreSoft.MathExpressions.FunctionExpression.ToString">
+            <summary>Returns a <see cref="T:System.String"/> that represents the current <see cref="T:System.Object"/>.</summary>
+            <returns>A <see cref="T:System.String"/> that represents the current <see cref="T:System.Object"/>.</returns>
+            <filterPriority>2</filterPriority>
+        </member>
+        <member name="M:LoreSoft.MathExpressions.FunctionExpression.GetFunctionNames">
+            <summary>
+            Gets the function names.
+            </summary>
+            <returns>An array of function names.</returns>
+        </member>
+        <member name="P:LoreSoft.MathExpressions.FunctionExpression.Function">
+            <summary>Gets the name function for this instance.</summary>
+            <value>The function name.</value>
+        </member>
+        <member name="P:LoreSoft.MathExpressions.FunctionExpression.ArgumentCount">
+            <summary>Gets the number of arguments this expression uses.</summary>
+            <value>The argument count.</value>
+        </member>
+        <member name="T:LoreSoft.MathExpressions.MathEvaluate">
+            <summary>Delegate used by an expression to do the math evaluation.</summary>
+            <param name="numbers">The numbers to evaluate.</param>
+            <returns>The result of the evaluated numbers.</returns>
+        </member>
+        <member name="T:LoreSoft.MathExpressions.MathEvaluator">
+            <summary>
+            Evaluate math expressions
+            </summary>
+            <example>Using the MathEvaluator to calculate a math expression.
+            <code>
+            MathEvaluator eval = new MathEvaluator();
+            //basic math
+            double result = eval.Evaluate("(2 + 1) * (1 + 2)");
+            //calling a function
+            result = eval.Evaluate("sqrt(4)");
+            //evaluate trigonometric 
+            result = eval.Evaluate("cos(pi * 45 / 180.0)");
+            //convert inches to feet
+            result = eval.Evaluate("12 [in->ft]");
+            //use variable
+            result = eval.Evaluate("answer * 10");
+            </code>
+            </example>
+        </member>
+        <member name="F:LoreSoft.MathExpressions.MathEvaluator.AnswerVariable">
+            <summary>The name of the answer variable.</summary>
+            <seealso cref="P:LoreSoft.MathExpressions.MathEvaluator.Variables"/>
+        </member>
+        <member name="M:LoreSoft.MathExpressions.MathEvaluator.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:LoreSoft.MathExpressions.MathEvaluator"/> class.
+            </summary>
+        </member>
+        <member name="M:LoreSoft.MathExpressions.MathEvaluator.Evaluate(System.String)">
+            <summary>Evaluates the specified expression.</summary>
+            <param name="expression">The expression to evaluate.</param>
+            <returns>The result of the evaluated expression.</returns>
+            <exception cref="T:System.ArgumentNullException">When expression is null or empty.</exception>
+            <exception cref="T:LoreSoft.MathExpressions.ParseException">When there is an error parsing the expression.</exception>
+        </member>
+        <member name="M:LoreSoft.MathExpressions.MathEvaluator.RegisterFunction(System.String,LoreSoft.MathExpressions.IExpression)">
+            <summary>Registers a function for the <see cref="T:LoreSoft.MathExpressions.MathEvaluator"/>.</summary>
+            <param name="functionName">Name of the function.</param>
+            <param name="expression">An instance of <see cref="T:LoreSoft.MathExpressions.IExpression"/> for the function.</param>
+            <exception cref="T:System.ArgumentNullException">When functionName or expression are null.</exception>
+            <exception cref="T:System.ArgumentException">When IExpression.Evaluate property is null or the functionName is already registered.</exception>
+            <seealso cref="P:LoreSoft.MathExpressions.MathEvaluator.Functions"/>
+            <seealso cref="T:LoreSoft.MathExpressions.IExpression"/>
+        </member>
+        <member name="M:LoreSoft.MathExpressions.MathEvaluator.IsFunction(System.String)">
+            <summary>Determines whether the specified name is a function.</summary>
+            <param name="name">The name of the function.</param>
+            <returns><c>true</c> if the specified name is function; otherwise, <c>false</c>.</returns>
+        </member>
+        <member name="M:LoreSoft.MathExpressions.MathEvaluator.Dispose">
+            <summary>
+            Releases unmanaged and - optionally - managed resources
+            </summary>
+        </member>
+        <member name="M:LoreSoft.MathExpressions.MathEvaluator.Dispose(System.Boolean)">
+            <summary>
+            Releases unmanaged and  managed resources
+            </summary>
+            <param name="disposing">
+            <c>true</c> to release both managed and unmanaged resources; 
+            <c>false</c> to release only unmanaged resources.
+            </param>
+        </member>
+        <member name="P:LoreSoft.MathExpressions.MathEvaluator.Variables">
+            <summary>
+            Gets the variables collections.
+            </summary>
+            <value>The variables for <see cref="T:LoreSoft.MathExpressions.MathEvaluator"/>.</value>
+        </member>
+        <member name="P:LoreSoft.MathExpressions.MathEvaluator.Functions">
+            <summary>Gets the functions available to <see cref="T:LoreSoft.MathExpressions.MathEvaluator"/>.</summary>
+            <value>The functions for <see cref="T:LoreSoft.MathExpressions.MathEvaluator"/>.</value>
+            <seealso cref="M:LoreSoft.MathExpressions.MathEvaluator.RegisterFunction(System.String,LoreSoft.MathExpressions.IExpression)"/>
+        </member>
+        <member name="P:LoreSoft.MathExpressions.MathEvaluator.Answer">
+            <summary>Gets the answer from the last evaluation.</summary>
+            <value>The answer variable value.</value>
+            <seealso cref="P:LoreSoft.MathExpressions.MathEvaluator.Variables"/>
+        </member>
+        <member name="T:LoreSoft.MathExpressions.MathOperators">
+            <summary>Math Operators</summary>
+        </member>
+        <member name="F:LoreSoft.MathExpressions.MathOperators.Add">
+            <summary>Add Operator</summary>
+        </member>
+        <member name="F:LoreSoft.MathExpressions.MathOperators.Subtract">
+            <summary>Subtract Operator</summary>
+        </member>
+        <member name="F:LoreSoft.MathExpressions.MathOperators.Multiple">
+            <summary>Multiple Operator</summary>
+        </member>
+        <member name="F:LoreSoft.MathExpressions.MathOperators.Divide">
+            <summary>Divide Operator</summary>
+        </member>
+        <member name="F:LoreSoft.MathExpressions.MathOperators.Modulo">
+            <summary>Modulo Operator</summary>
+        </member>
+        <member name="F:LoreSoft.MathExpressions.MathOperators.Power">
+            <summary>Power Operator</summary>
+        </member>
+        <member name="T:LoreSoft.MathExpressions.Metadata.AttributeReader">
+            <summary>
+            A class to read attributes from type members.
+            </summary>
+        </member>
+        <member name="M:LoreSoft.MathExpressions.Metadata.AttributeReader.GetDescription``1(``0)">
+            <summary>
+            Gets the description from the <see cref="T:System.ComponentModel.DescriptionAttribute"/> on an enum.
+            </summary>
+            <typeparam name="T">An enum type.</typeparam>
+            <param name="instance">The value to get the description from.</param>
+            <returns>The <see cref="P:System.ComponentModel.DescriptionAttribute.Description"/> or the name of the instance.</returns>
+            <seealso cref="T:System.ComponentModel.DescriptionAttribute"/>
+        </member>
+        <member name="M:LoreSoft.MathExpressions.Metadata.AttributeReader.GetDescription(System.Reflection.MemberInfo)">
+            <summary>
+            Gets the description from the <see cref="T:System.ComponentModel.DescriptionAttribute"/> on a MemberInfo.
+            </summary>
+            <param name="info">The member info to look for the description.</param>
+            <returns>The <see cref="P:System.ComponentModel.DescriptionAttribute.Description"/> or the name of the member.</returns>
+            <seealso cref="T:System.ComponentModel.DescriptionAttribute"/>
+        </member>
+        <member name="M:LoreSoft.MathExpressions.Metadata.AttributeReader.GetAbbreviation``1(``0)">
+            <summary>
+            Gets the abbreviation from the <see cref="T:LoreSoft.MathExpressions.Metadata.AbbreviationAttribute"/> on an enum.
+            </summary>
+            <typeparam name="T">An enum type.</typeparam>
+            <param name="instance">The enum to get the abbreviation from.</param>
+            <returns>The <see cref="P:LoreSoft.MathExpressions.Metadata.AbbreviationAttribute.Text"/> or the name of the memeber.</returns>
+            <seealso cref="T:LoreSoft.MathExpressions.Metadata.AbbreviationAttribute"/>
+        </member>
+        <member name="M:LoreSoft.MathExpressions.Metadata.AttributeReader.GetAbbreviation(System.Reflection.MemberInfo)">
+            <summary>
+            Gets the abbreviation from the <see cref="T:LoreSoft.MathExpressions.Metadata.AbbreviationAttribute"/> on a instance.
+            </summary>
+            <param name="info">The instance info look for the abbreviation.</param>
+            <returns>The <see cref="P:LoreSoft.MathExpressions.Metadata.AbbreviationAttribute.Text"/> or the name of the instance.</returns>
+            <seealso cref="T:LoreSoft.MathExpressions.Metadata.AbbreviationAttribute"/>
+        </member>
+        <member name="T:LoreSoft.MathExpressions.NumberExpression">
+            <summary>
+            Class representing a constant number expression.
+            </summary>
+        </member>
+        <member name="M:LoreSoft.MathExpressions.NumberExpression.#ctor(System.Double)">
+            <summary>Initializes a new instance of the <see cref="T:LoreSoft.MathExpressions.NumberExpression"/> class.</summary>
+            <param name="value">The number value for this expression.</param>
+        </member>
+        <member name="M:LoreSoft.MathExpressions.NumberExpression.IsNumber(System.Char)">
+            <summary>Determines whether the specified char is a number.</summary>
+            <param name="c">The char to test.</param>
+            <returns><c>true</c> if the specified char is a number; otherwise, <c>false</c>.</returns>
+            <remarks>This method checks if the char is a digit or a decimal separator.</remarks>
+        </member>
+        <member name="M:LoreSoft.MathExpressions.NumberExpression.IsNegativeSign(System.Char)">
+            <summary>Determines whether the specified char is negative sign.</summary>
+            <param name="c">The char to check.</param>
+            <returns><c>true</c> if the specified char is negative sign; otherwise, <c>false</c>.</returns>
+        </member>
+        <member name="M:LoreSoft.MathExpressions.NumberExpression.ToString">
+            <summary>
+            Returns a <see cref="T:System.String"/> that represents the current <see cref="T:System.Object"/>.
+            </summary>
+            <returns>
+            A <see cref="T:System.String"/> that represents the current <see cref="T:System.Object"/>.
+            </returns>
+            <filterPriority>2</filterPriority>
+        </member>
+        <member name="P:LoreSoft.MathExpressions.NumberExpression.ArgumentCount">
+            <summary>Gets the number of arguments this expression uses.</summary>
+            <value>The argument count.</value>
+        </member>
+        <member name="P:LoreSoft.MathExpressions.NumberExpression.Value">
+            <summary>Gets the number value for this expression.</summary>
+            <value>The number value.</value>
+        </member>
+        <member name="T:LoreSoft.MathExpressions.OperatorExpression">
+            <summary>
+            Class representing a math operator expression.
+            </summary>
+        </member>
+        <member name="F:LoreSoft.MathExpressions.OperatorExpression.operatorSymbols">
+            <summary>The supported math operators by this class.</summary>
+        </member>
+        <member name="M:LoreSoft.MathExpressions.OperatorExpression.#ctor(System.String)">
+            <summary>Initializes a new instance of the <see cref="T:LoreSoft.MathExpressions.OperatorExpression"/> class.</summary>
+            <param name="operator">The operator to use for this class.</param>
+            <exception cref="T:System.ArgumentNullException">When the operator is null or empty.</exception>
+            <exception cref="T:System.ArgumentException">When the operator is invalid.</exception>
+        </member>
+        <member name="M:LoreSoft.MathExpressions.OperatorExpression.Add(System.Double[])">
+            <summary>Adds the specified numbers.</summary>
+            <param name="numbers">The numbers.</param>
+            <returns>The result of the operation.</returns>
+            <exception cref="T:System.ArgumentNullException">When numbers is null.</exception>
+            <exception cref="T:System.ArgumentException">When the length of numbers do not equal <see cref="P:LoreSoft.MathExpressions.OperatorExpression.ArgumentCount"/>.</exception>
+        </member>
+        <member name="M:LoreSoft.MathExpressions.OperatorExpression.Subtract(System.Double[])">
+            <summary>Subtracts the specified numbers.</summary>
+            <param name="numbers">The numbers.</param>
+            <returns>The result of the operation.</returns>
+            <exception cref="T:System.ArgumentNullException">When numbers is null.</exception>
+            <exception cref="T:System.ArgumentException">When the length of numbers do not equal <see cref="P:LoreSoft.MathExpressions.OperatorExpression.ArgumentCount"/>.</exception>
+        </member>
+        <member name="M:LoreSoft.MathExpressions.OperatorExpression.Multiple(System.Double[])">
+            <summary>Multiples the specified numbers.</summary>
+            <param name="numbers">The numbers.</param>
+            <returns>The result of the operation.</returns>
+            <exception cref="T:System.ArgumentNullException">When numbers is null.</exception>
+            <exception cref="T:System.ArgumentException">When the length of numbers do not equal <see cref="P:LoreSoft.MathExpressions.OperatorExpression.ArgumentCount"/>.</exception>
+        </member>
+        <member name="M:LoreSoft.MathExpressions.OperatorExpression.Divide(System.Double[])">
+            <summary>Divides the specified numbers.</summary>
+            <param name="numbers">The numbers.</param>
+            <returns>The result of the operation.</returns>
+            <exception cref="T:System.ArgumentNullException">When numbers is null.</exception>
+            <exception cref="T:System.ArgumentException">When the length of numbers do not equal <see cref="P:LoreSoft.MathExpressions.OperatorExpression.ArgumentCount"/>.</exception>
+        </member>
+        <member name="M:LoreSoft.MathExpressions.OperatorExpression.Modulo(System.Double[])">
+            <summary>Modulo the specified numbers.</summary>
+            <param name="numbers">The numbers.</param>
+            <returns>The result of the operation.</returns>
+            <exception cref="T:System.ArgumentNullException">When numbers is null.</exception>
+            <exception cref="T:System.ArgumentException">When the length of numbers do not equal <see cref="P:LoreSoft.MathExpressions.OperatorExpression.ArgumentCount"/>.</exception>
+        </member>
+        <member name="M:LoreSoft.MathExpressions.OperatorExpression.Power(System.Double[])">
+            <summary>Power for the specified numbers.</summary>
+            <param name="numbers">The numbers.</param>
+            <returns>The result of the operation.</returns>
+            <exception cref="T:System.ArgumentNullException">When numbers is null.</exception>
+            <exception cref="T:System.ArgumentException">When the length of numbers do not equal <see cref="P:LoreSoft.MathExpressions.OperatorExpression.ArgumentCount"/>.</exception>
+        </member>
+        <member name="M:LoreSoft.MathExpressions.OperatorExpression.IsSymbol(System.String)">
+            <summary>Determines whether the specified string is a math symbol.</summary>
+            <param name="s">The string to check.</param>
+            <returns><c>true</c> if the specified string is a math symbol; otherwise, <c>false</c>.</returns>
+        </member>
+        <member name="M:LoreSoft.MathExpressions.OperatorExpression.IsSymbol(System.Char)">
+            <summary>Determines whether the specified char is a math symbol.</summary>
+            <param name="c">The char to check.</param>
+            <returns><c>true</c> if the specified char is a math symbol; otherwise, <c>false</c>.</returns>
+        </member>
+        <member name="M:LoreSoft.MathExpressions.OperatorExpression.ToString">
+            <summary>
+            Returns a <see cref="T:System.String"/> that represents the current <see cref="T:System.Object"/>.
+            </summary>
+            <returns>
+            A <see cref="T:System.String"/> that represents the current <see cref="T:System.Object"/>.
+            </returns>
+            <filterPriority>2</filterPriority>
+        </member>
+        <member name="P:LoreSoft.MathExpressions.OperatorExpression.MathOperator">
+            <summary>Gets the math operator.</summary>
+            <value>The math operator.</value>
+        </member>
+        <member name="P:LoreSoft.MathExpressions.OperatorExpression.ArgumentCount">
+            <summary>Gets the number of arguments this expression uses.</summary>
+            <value>The argument count.</value>
+        </member>
+        <member name="T:LoreSoft.MathExpressions.ParseException">
+            <summary>
+            The exception that is thrown when there is an error parsing a math expression.
+            </summary>
+        </member>
+        <member name="M:LoreSoft.MathExpressions.ParseException.#ctor">
+            <summary>Initializes a new instance of the <see cref="T:LoreSoft.MathExpressions.ParseException"/> class.</summary>
+        </member>
+        <member name="M:LoreSoft.MathExpressions.ParseException.#ctor(System.String)">
+            <summary>Initializes a new instance of the <see cref="T:LoreSoft.MathExpressions.ParseException"/> class.</summary>
+            <param name="message">The message.</param>
+        </member>
+        <member name="M:LoreSoft.MathExpressions.ParseException.#ctor(System.String,System.Exception)">
+            <summary>Initializes a new instance of the <see cref="T:LoreSoft.MathExpressions.ParseException"/> class.</summary>
+            <param name="message">The message.</param>
+            <param name="innerException">The inner exception.</param>
+        </member>
+        <member name="M:LoreSoft.MathExpressions.ParseException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:LoreSoft.MathExpressions.ParseException"/> class with serialized data.
+            </summary>
+            <param name="info">The SerializationInfo that holds the serialized object data about the exception being thrown.</param>
+            <param name="context">The StreamingContext that contains contextual information about the source or destination.</param>
+        </member>
+        <member name="T:LoreSoft.MathExpressions.Properties.Resources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:LoreSoft.MathExpressions.Properties.Resources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:LoreSoft.MathExpressions.Properties.Resources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:LoreSoft.MathExpressions.Properties.Resources.EvaluatePropertyCanNotBeNull">
+            <summary>
+              Looks up a localized string similar to The IExpression.Evaluate property can not be null..
+            </summary>
+        </member>
+        <member name="P:LoreSoft.MathExpressions.Properties.Resources.FunctionNameRegistered">
+            <summary>
+              Looks up a localized string similar to The function name &apos;{0}&apos; is already registered..
+            </summary>
+        </member>
+        <member name="P:LoreSoft.MathExpressions.Properties.Resources.InvalidCharacterEncountered">
+            <summary>
+              Looks up a localized string similar to Invalid character: .
+            </summary>
+        </member>
+        <member name="P:LoreSoft.MathExpressions.Properties.Resources.InvalidConvertionExpression">
+            <summary>
+              Looks up a localized string similar to Invalid convertion expression: .
+            </summary>
+        </member>
+        <member name="P:LoreSoft.MathExpressions.Properties.Resources.InvalidFunctionName">
+            <summary>
+              Looks up a localized string similar to Invalid function name &apos;{0}&apos;..
+            </summary>
+        </member>
+        <member name="P:LoreSoft.MathExpressions.Properties.Resources.InvalidLengthOfArray">
+            <summary>
+              Looks up a localized string similar to Invalid length of array..
+            </summary>
+        </member>
+        <member name="P:LoreSoft.MathExpressions.Properties.Resources.InvalidMathExpression">
+            <summary>
+              Looks up a localized string similar to Invalid math expression..
+            </summary>
+        </member>
+        <member name="P:LoreSoft.MathExpressions.Properties.Resources.InvalidNumberFormat">
+            <summary>
+              Looks up a localized string similar to Invalid number format: .
+            </summary>
+        </member>
+        <member name="P:LoreSoft.MathExpressions.Properties.Resources.InvalidOperator">
+            <summary>
+              Looks up a localized string similar to Invalid operator: .
+            </summary>
+        </member>
+        <member name="P:LoreSoft.MathExpressions.Properties.Resources.InvalidSymbolOnStack">
+            <summary>
+              Looks up a localized string similar to Invalid symbol on stack: .
+            </summary>
+        </member>
+        <member name="P:LoreSoft.MathExpressions.Properties.Resources.InvalidVariableEncountered">
+            <summary>
+              Looks up a localized string similar to Invalid function or variable: .
+            </summary>
+        </member>
+        <member name="P:LoreSoft.MathExpressions.Properties.Resources.NotEnoughNumbers">
+            <summary>
+              Looks up a localized string similar to Invalid number for expression: .
+            </summary>
+        </member>
+        <member name="P:LoreSoft.MathExpressions.Properties.Resources.UnbalancedParentheses">
+            <summary>
+              Looks up a localized string similar to Unbalanced parentheses..
+            </summary>
+        </member>
+        <member name="P:LoreSoft.MathExpressions.Properties.Resources.VariableNameConflict">
+            <summary>
+              Looks up a localized string similar to The variable name conflicts with function &apos;{0}&apos;..
+            </summary>
+        </member>
+        <member name="P:LoreSoft.MathExpressions.Properties.Resources.VariableNameContainsLetters">
+            <summary>
+              Looks up a localized string similar to The variable name can only contain letters..
+            </summary>
+        </member>
+        <member name="T:LoreSoft.MathExpressions.Metadata.AbbreviationAttribute">
+            <summary>
+            Specifies an abbreviation for a instance. 
+            </summary>
+        </member>
+        <member name="M:LoreSoft.MathExpressions.Metadata.AbbreviationAttribute.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:LoreSoft.MathExpressions.Metadata.AbbreviationAttribute"/> class.
+            </summary>
+            <param name="text">The abbreviation text.</param>
+        </member>
+        <member name="M:LoreSoft.MathExpressions.Metadata.AbbreviationAttribute.ToString">
+            <summary>
+            Returns a <see cref="T:System.String"/> that represents the current <see cref="T:System.Object"/>.
+            </summary>
+            <returns>
+            A <see cref="T:System.String"/> that represents the current <see cref="T:System.Object"/>.
+            </returns>
+            <filterPriority>2</filterPriority>
+        </member>
+        <member name="P:LoreSoft.MathExpressions.Metadata.AbbreviationAttribute.Text">
+            <summary>
+            Gets the abbreviation text.
+            </summary>
+            <value>The abbreviation text.</value>
+        </member>
+        <member name="T:LoreSoft.MathExpressions.UnitConversion.LengthUnit">
+            <summary>Units for Length</summary>
+        </member>
+        <member name="F:LoreSoft.MathExpressions.UnitConversion.LengthUnit.Millimeter">
+            <summary>Millimeter unit (mm)</summary>
+        </member>
+        <member name="F:LoreSoft.MathExpressions.UnitConversion.LengthUnit.Centimeter">
+            <summary>Centimeter unit (cm)</summary>
+        </member>
+        <member name="F:LoreSoft.MathExpressions.UnitConversion.LengthUnit.Meter">
+            <summary>Meter unit (m)</summary>
+        </member>
+        <member name="F:LoreSoft.MathExpressions.UnitConversion.LengthUnit.Kilometer">
+            <summary>Kilometer unit (km)</summary>
+        </member>
+        <member name="F:LoreSoft.MathExpressions.UnitConversion.LengthUnit.Inch">
+            <summary>Inch unit (in)</summary>
+        </member>
+        <member name="F:LoreSoft.MathExpressions.UnitConversion.LengthUnit.Feet">
+            <summary>Feet unit (ft)</summary>
+        </member>
+        <member name="F:LoreSoft.MathExpressions.UnitConversion.LengthUnit.Yard">
+            <summary>Yard unit (yd)</summary>
+        </member>
+        <member name="F:LoreSoft.MathExpressions.UnitConversion.LengthUnit.Mile">
+            <summary>Mile unit (mile)</summary>
+        </member>
+        <member name="T:LoreSoft.MathExpressions.UnitConversion.LengthConverter">
+            <summary>
+            Class representing length convertion.
+            </summary>
+        </member>
+        <member name="M:LoreSoft.MathExpressions.UnitConversion.LengthConverter.Convert(LoreSoft.MathExpressions.UnitConversion.LengthUnit,LoreSoft.MathExpressions.UnitConversion.LengthUnit,System.Double)">
+            <summary>
+            Converts the specified from unit to the specified unit.
+            </summary>
+            <param name="fromUnit">Covert from unit.</param>
+            <param name="toUnit">Covert to unit.</param>
+            <param name="fromValue">Covert from value.</param>
+            <returns>The converted value.</returns>
+        </member>
+        <member name="T:LoreSoft.MathExpressions.UnitConversion.MassUnit">
+            <summary>Units for Mass</summary>
+        </member>
+        <member name="F:LoreSoft.MathExpressions.UnitConversion.MassUnit.Milligram">
+            <summary>Milligram unit (mg)</summary>
+        </member>
+        <member name="F:LoreSoft.MathExpressions.UnitConversion.MassUnit.Gram">
+            <summary>Gram unit (g)</summary>
+        </member>
+        <member name="F:LoreSoft.MathExpressions.UnitConversion.MassUnit.Kilogram">
+            <summary>Kilogram unit (kg)</summary>
+        </member>
+        <member name="F:LoreSoft.MathExpressions.UnitConversion.MassUnit.Ounce">
+            <summary>Ounce unit (oz)</summary>
+        </member>
+        <member name="F:LoreSoft.MathExpressions.UnitConversion.MassUnit.Pound">
+            <summary>Pound unit (lb)</summary>
+        </member>
+        <member name="F:LoreSoft.MathExpressions.UnitConversion.MassUnit.Ton">
+            <summary>Ton unit (ton)</summary>
+        </member>
+        <member name="T:LoreSoft.MathExpressions.UnitConversion.MassConverter">
+            <summary>
+            Class representing mass convertion.
+            </summary>
+        </member>
+        <member name="M:LoreSoft.MathExpressions.UnitConversion.MassConverter.Convert(LoreSoft.MathExpressions.UnitConversion.MassUnit,LoreSoft.MathExpressions.UnitConversion.MassUnit,System.Double)">
+            <summary>
+            Converts the specified from unit to the specified unit.
+            </summary>
+            <param name="fromUnit">Covert from unit.</param>
+            <param name="toUnit">Covert to unit.</param>
+            <param name="fromValue">Covert from value.</param>
+            <returns>The converted value.</returns>
+        </member>
+        <member name="T:LoreSoft.MathExpressions.UnitConversion.SpeedUnit">
+            <summary>Units for Speed</summary>
+        </member>
+        <member name="F:LoreSoft.MathExpressions.UnitConversion.SpeedUnit.MeterPerSecond">
+            <summary>Meter/Second unit (m/s)</summary>
+        </member>
+        <member name="F:LoreSoft.MathExpressions.UnitConversion.SpeedUnit.KilometerPerHour">
+            <summary>Kilometer/Hour unit (kph)</summary>
+        </member>
+        <member name="F:LoreSoft.MathExpressions.UnitConversion.SpeedUnit.FootPerSecond">
+            <summary>Foot/Second unit (ft/s)</summary>
+        </member>
+        <member name="F:LoreSoft.MathExpressions.UnitConversion.SpeedUnit.MilePerHour">
+            <summary>Mile/Hour unit (mph)</summary>
+        </member>
+        <member name="F:LoreSoft.MathExpressions.UnitConversion.SpeedUnit.Knot">
+            <summary>Knot unit (knot)</summary>
+        </member>
+        <member name="F:LoreSoft.MathExpressions.UnitConversion.SpeedUnit.Mach">
+            <summary>Mach unit (mach)</summary>
+        </member>
+        <member name="T:LoreSoft.MathExpressions.UnitConversion.SpeedConverter">
+            <summary>
+            Class representing speed convertion.
+            </summary>
+        </member>
+        <member name="M:LoreSoft.MathExpressions.UnitConversion.SpeedConverter.Convert(LoreSoft.MathExpressions.UnitConversion.SpeedUnit,LoreSoft.MathExpressions.UnitConversion.SpeedUnit,System.Double)">
+            <summary>
+            Converts the specified from unit to the specified unit.
+            </summary>
+            <param name="fromUnit">Covert from unit.</param>
+            <param name="toUnit">Covert to unit.</param>
+            <param name="fromValue">Covert from value.</param>
+            <returns>The converted value.</returns>
+        </member>
+        <member name="T:LoreSoft.MathExpressions.UnitConversion.TemperatureUnit">
+            <summary>Units for Temperature</summary>
+        </member>
+        <member name="F:LoreSoft.MathExpressions.UnitConversion.TemperatureUnit.Celsius">
+            <summary>Degrees Celsius unit (c)</summary>
+        </member>
+        <member name="F:LoreSoft.MathExpressions.UnitConversion.TemperatureUnit.Fahrenheit">
+            <summary>Degrees Fahrenheit unit (f)</summary>
+        </member>
+        <member name="F:LoreSoft.MathExpressions.UnitConversion.TemperatureUnit.Kelvin">
+            <summary>Degrees Kelvin unit (k)</summary>
+        </member>
+        <member name="T:LoreSoft.MathExpressions.UnitConversion.TemperatureConverter">
+            <summary>
+            Class representing temperature convertion.
+            </summary>
+        </member>
+        <member name="M:LoreSoft.MathExpressions.UnitConversion.TemperatureConverter.Convert(LoreSoft.MathExpressions.UnitConversion.TemperatureUnit,LoreSoft.MathExpressions.UnitConversion.TemperatureUnit,System.Double)">
+            <summary>
+            Converts the specified from unit to the specified unit.
+            </summary>
+            <param name="fromUnit">Covert from unit.</param>
+            <param name="toUnit">Covert to unit.</param>
+            <param name="fromValue">Covert from value.</param>
+            <returns>The converted value.</returns>
+        </member>
+        <member name="T:LoreSoft.MathExpressions.UnitConversion.TimeUnit">
+            <summary>Units for Time</summary>
+        </member>
+        <member name="F:LoreSoft.MathExpressions.UnitConversion.TimeUnit.Millisecond">
+            <summary>Millisecond unit (ms)</summary>
+        </member>
+        <member name="F:LoreSoft.MathExpressions.UnitConversion.TimeUnit.Second">
+            <summary>Second unit (sec)</summary>
+        </member>
+        <member name="F:LoreSoft.MathExpressions.UnitConversion.TimeUnit.Minute">
+            <summary>Minute unit (min)</summary>
+        </member>
+        <member name="F:LoreSoft.MathExpressions.UnitConversion.TimeUnit.Hour">
+            <summary>Hour unit (hr)</summary>
+        </member>
+        <member name="F:LoreSoft.MathExpressions.UnitConversion.TimeUnit.Day">
+            <summary>Day unit (d)</summary>
+        </member>
+        <member name="F:LoreSoft.MathExpressions.UnitConversion.TimeUnit.Week">
+            <summary>Week unit (wk)</summary>
+        </member>
+        <member name="T:LoreSoft.MathExpressions.UnitConversion.TimeConverter">
+            <summary>
+            Class representing time convertion.
+            </summary>
+        </member>
+        <member name="M:LoreSoft.MathExpressions.UnitConversion.TimeConverter.Convert(LoreSoft.MathExpressions.UnitConversion.TimeUnit,LoreSoft.MathExpressions.UnitConversion.TimeUnit,System.Double)">
+            <summary>
+            Converts the specified from unit to the specified unit.
+            </summary>
+            <param name="fromUnit">Covert from unit.</param>
+            <param name="toUnit">Covert to unit.</param>
+            <param name="fromValue">Covert from value.</param>
+            <returns>The converted value.</returns>
+        </member>
+        <member name="T:LoreSoft.MathExpressions.UnitConversion.UnitType">
+            <summary>The unit types available for conversion.</summary>
+        </member>
+        <member name="F:LoreSoft.MathExpressions.UnitConversion.UnitType.Length">
+            <summary>Length unit types.</summary>
+        </member>
+        <member name="F:LoreSoft.MathExpressions.UnitConversion.UnitType.Mass">
+            <summary>Mass unit types.</summary>
+        </member>
+        <member name="F:LoreSoft.MathExpressions.UnitConversion.UnitType.Speed">
+            <summary>Speed unit types.</summary>
+        </member>
+        <member name="F:LoreSoft.MathExpressions.UnitConversion.UnitType.Temperature">
+            <summary>Temperature unit types.</summary>
+        </member>
+        <member name="F:LoreSoft.MathExpressions.UnitConversion.UnitType.Time">
+            <summary>Time unit types.</summary>
+        </member>
+        <member name="F:LoreSoft.MathExpressions.UnitConversion.UnitType.Volume">
+            <summary>Volume unit types.</summary>
+        </member>
+        <member name="T:LoreSoft.MathExpressions.UnitConversion.VolumeUnit">
+            <summary>Units for Liquid Volume</summary>
+        </member>
+        <member name="F:LoreSoft.MathExpressions.UnitConversion.VolumeUnit.Milliliter">
+            <summary>Milliliter unit (ml)</summary>
+        </member>
+        <member name="F:LoreSoft.MathExpressions.UnitConversion.VolumeUnit.Liter">
+            <summary>Liter unit (l)</summary>
+        </member>
+        <member name="F:LoreSoft.MathExpressions.UnitConversion.VolumeUnit.Kiloliter">
+            <summary>Kiloliter unit (kl)</summary>
+        </member>
+        <member name="F:LoreSoft.MathExpressions.UnitConversion.VolumeUnit.FluidOunce">
+            <summary>Fluid ounce unit (oz)</summary>
+        </member>
+        <member name="F:LoreSoft.MathExpressions.UnitConversion.VolumeUnit.Cup">
+            <summary>Cup unit (cup)</summary>
+        </member>
+        <member name="F:LoreSoft.MathExpressions.UnitConversion.VolumeUnit.Pint">
+            <summary>Pint unit (pt)</summary>
+        </member>
+        <member name="F:LoreSoft.MathExpressions.UnitConversion.VolumeUnit.Quart">
+            <summary>Quart unit (qt)</summary>
+        </member>
+        <member name="F:LoreSoft.MathExpressions.UnitConversion.VolumeUnit.Gallon">
+            <summary>Gallon unit (gal)</summary>
+        </member>
+        <member name="T:LoreSoft.MathExpressions.UnitConversion.VolumeConverter">
+            <summary>
+            Class representing liquid volume convertion.
+            </summary>
+        </member>
+        <member name="M:LoreSoft.MathExpressions.UnitConversion.VolumeConverter.Convert(LoreSoft.MathExpressions.UnitConversion.VolumeUnit,LoreSoft.MathExpressions.UnitConversion.VolumeUnit,System.Double)">
+            <summary>
+            Converts the specified from unit to the specified unit.
+            </summary>
+            <param name="fromUnit">Covert from unit.</param>
+            <param name="toUnit">Covert to unit.</param>
+            <param name="fromValue">Covert from value.</param>
+            <returns>The converted value.</returns>
+        </member>
+        <member name="T:LoreSoft.MathExpressions.VariableDictionary">
+            <summary>
+            Class representing a collection of variable names and values.
+            </summary>
+            <remarks>
+            Variable names can only contain letters, numbers and symbols are not allowed.
+            </remarks>
+        </member>
+        <member name="M:LoreSoft.MathExpressions.VariableDictionary.#ctor(LoreSoft.MathExpressions.MathEvaluator)">
+            <summary>Initializes a new instance of the <see cref="T:LoreSoft.MathExpressions.VariableDictionary"/> class.</summary>
+            <param name="evaluator">The evaluator.</param>
+        </member>
+        <member name="M:LoreSoft.MathExpressions.VariableDictionary.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:LoreSoft.MathExpressions.VariableDictionary"/> class.
+            </summary>
+            <param name="info">A <see cref="T:System.Runtime.Serialization.SerializationInfo"/> object containing the information required to serialize the <see cref="T:System.Collections.Generic.Dictionary`2"/>.</param>
+            <param name="context">A <see cref="T:System.Runtime.Serialization.StreamingContext"/> structure containing the source and destination of the serialized stream associated with the <see cref="T:System.Collections.Generic.Dictionary`2"/>.</param>
+        </member>
+        <member name="M:LoreSoft.MathExpressions.VariableDictionary.Add(System.String,System.Double)">
+            <summary>Adds the specified variable and value to the dictionary.</summary>
+            <param name="name">The name of the variable to add.</param>
+            <param name="value">The value of the variable.</param>
+            <exception cref="T:System.ArgumentNullException">When variable name is null.</exception>
+            <exception cref="T:System.ArgumentException">When variable name contains non-letters or the name exists in the <see cref="P:LoreSoft.MathExpressions.MathEvaluator.Functions"/> list.</exception>
+            <seealso cref="T:LoreSoft.MathExpressions.MathEvaluator"/>
+            <seealso cref="P:LoreSoft.MathExpressions.MathEvaluator.Variables"/>
+            <seealso cref="P:LoreSoft.MathExpressions.MathEvaluator.Functions"/>
+        </member>
+        <member name="M:LoreSoft.MathExpressions.VariableDictionary.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            Implements the <see cref="T:System.Runtime.Serialization.ISerializable"/> interface and returns the data needed to serialize the <see cref="T:System.Collections.Generic.Dictionary`2"/> instance.
+            </summary>
+            <param name="info">A <see cref="T:System.Runtime.Serialization.SerializationInfo"/> object that contains the information required to serialize the <see cref="T:System.Collections.Generic.Dictionary`2"/> instance.</param>
+            <param name="context">A <see cref="T:System.Runtime.Serialization.StreamingContext"/> structure that contains the source and destination of the serialized stream associated with the <see cref="T:System.Collections.Generic.Dictionary`2"/> instance.</param>
+        </member>
+    </members>
+</doc>
