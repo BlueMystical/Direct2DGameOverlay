@@ -2,7 +2,7 @@
 An Overlay for games or any program.
 
 Still on alpha but the Release works.
-Testend with the 'Elite Dangerous' game.
+Tested with the 'Elite Dangerous' game.
 
 Based on:
 - [SharpDX](https://github.com/sharpdx/SharpDX)
