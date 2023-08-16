@@ -6,7 +6,7 @@ Testend with the 'Elite Dangerous' game.
 
 Based on:
 - [SharpDX](https://github.com/sharpdx/SharpDX)
-- [Overlay.NET](https://github.com/lolp1/Overlay.NET) by @lolp1 Jacob Kemple.
+- [Overlay.NET](https://github.com/lolp1/Overlay.NET) 
 - [Process.NET](https://github.com/lolp1/Process.NET)
 
 Requeriments:
