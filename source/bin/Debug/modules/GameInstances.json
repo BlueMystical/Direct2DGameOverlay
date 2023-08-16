@@ -1,0 +1,251 @@
+﻿[
+  {
+    "Name": "Elite Dangerous",
+    "ExeName": "EliteDangerous64",
+    "Modules": [
+      {
+        "Name": "Targeting Reticle",
+        "Description": "Just a custom Reticle to get a competitive advantage.",
+        "Enabled": true,
+        "HotKeys": 110,
+        "Layers": {
+          "Layer_1": {
+            "Name": "Reticle #2",
+            "Description": "Orange Color and at the center of the screen.",
+            "Kind": 13,
+            "Visible": true,
+            "Location": {
+              "X": "WindowWidth / 2",
+              "Y": "WindowHeight / 2"
+            },
+            "Size": null,
+            "Colors": {
+              "ForeColor": "Orange",
+              "BackColor": ""
+            },
+            "Lines": {
+              "Stroke": 1,
+              "Length": 40,
+              "Padding": 4
+            },
+            "Text": null,
+            "Texture": null,
+            "Geometry": null,
+            "CallBackCodeFile": null,
+            "TimeOff": 5
+          }
+        }
+      },
+      {
+        "Name": "FPS Meter",
+        "Description": "an un-accurate FPS counter.",
+        "Enabled": true,
+        "HotKeys": 131089,
+        "Layers": {
+          "Layer_2": {
+            "Name": "FPS_Background",
+            "Description": "a semi-transparent background for FPS counter.",
+            "Kind": 9,
+            "Visible": false,
+            "Location": {
+              "X": "8",
+              "Y": "76"
+            },
+            "Size": {
+              "Width": "114",
+              "Height": "42"
+            },
+            "Colors": {
+              "ForeColor": "",
+              "BackColor": "127,128,0,255"
+            },
+            "Lines": {
+              "Stroke": 0,
+              "Length": 0,
+              "Padding": 0
+            },
+            "Text": null,
+            "Texture": null,
+            "Geometry": null,
+            "CallBackCodeFile": null,
+            "TimeOff": 5
+          },
+          "Layer_3": {
+            "Name": "FPS Counter",
+            "Description": "The actual FPS counter.",
+            "Kind": 16,
+            "Visible": true,
+            "Location": {
+              "X": "10",
+              "Y": "80"
+            },
+            "Size": null,
+            "Colors": {
+              "ForeColor": "White",
+              "BackColor": ""
+            },
+            "Lines": {
+              "Stroke": 0,
+              "Length": 0,
+              "Padding": 0
+            },
+            "Text": {
+              "Text": "FPS: 60",
+              "Font": "Arial;14"
+            },
+            "Texture": null,
+            "Geometry": null,
+            "CallBackCodeFile": null,
+            "TimeOff": 5
+          },
+          "GPU Usage": {
+            "Name": "GPU Usage",
+            "Description": "% of use of the GPU.",
+            "Kind": 21,
+            "Visible": false,
+            "Location": {
+              "X": "10",
+              "Y": "100"
+            },
+            "Size": null,
+            "Colors": {
+              "ForeColor": "White",
+              "BackColor": null
+            },
+            "Lines": null,
+            "Text": {
+              "Text": "GPU Use: 22,2%",
+              "Font": "Arial;14;0"
+            },
+            "Texture": null,
+            "Geometry": null,
+            "CallBackCodeFile": null,
+            "TimeOff": 1000
+          }
+        }
+      },
+      {
+        "Name": "Logo",
+        "Description": "Orange EDHM Logo",
+        "Enabled": true,
+        "HotKeys": 131181,
+        "Layers": {
+          "Layer_4": {
+            "Name": "Logo EDHM",
+            "Description": "Orange EDHM Logo",
+            "Kind": 17,
+            "Visible": true,
+            "Location": {
+              "X": "WindowWidth - 150",
+              "Y": "150"
+            },
+            "Size": {
+              "Width": "100",
+              "Height": "100"
+            },
+            "Colors": null,
+            "Lines": {
+              "Stroke": 0,
+              "Length": 0,
+              "Padding": 0
+            },
+            "Text": null,
+            "Texture": {
+              "TextureName": "Logo EDHM",
+              "TextureFile": "triple-elite_250.png",
+              "Opacity": 0.699999988
+            },
+            "Geometry": null,
+            "CallBackCodeFile": null,
+            "TimeOff": 0
+          },
+          "Layer_2": {
+            "Name": "Tirlana Exeldilica",
+            "Description": "from CopCraft",
+            "Kind": 17,
+            "Visible": false,
+            "Location": {
+              "X": "100",
+              "Y": "200"
+            },
+            "Size": {
+              "Width": "220",
+              "Height": "300"
+            },
+            "Colors": null,
+            "Lines": null,
+            "Text": null,
+            "Texture": {
+              "TextureName": "Tirlana",
+              "TextureFile": "CopCraft_02.png",
+              "Opacity": 0.699999988
+            },
+            "Geometry": null,
+            "CallBackCodeFile": null,
+            "TimeOff": 5
+          },
+          "Layer_3": {
+            "Name": "MessageBox",
+            "Description": "This is a simple Message box who will auto-hide after 5 seconds.",
+            "Kind": 20,
+            "Visible": false,
+            "Location": {
+              "X": "50",
+              "Y": "200"
+            },
+            "Size": {
+              "Width": "200",
+              "Height": "90"
+            },
+            "Colors": {
+              "ForeColor": "White",
+              "BackColor": "Blue50%"
+            },
+            "Lines": {
+              "Stroke": 1,
+              "Length": 0,
+              "Padding": 0
+            },
+            "Text": {
+              "Text": "Titulo del Mensaje|Lorem Ipsum is simply dummy text of the printing and typesetting industry.\r\n\r\nLorem Ipsum has been the industry\u0027s standard dummy text ever since the 1500s.",
+              "Font": "Arial;14"
+            },
+            "Texture": null,
+            "Geometry": null,
+            "CallBackCodeFile": null,
+            "TimeOff": 5000
+          }
+        }
+      },
+      {
+        "Name": "External Module",
+        "Description": "this contains a layer who executes code loaded from a file and compiled at runtime.",
+        "Enabled": true,
+        "HotKeys": 0,
+        "Layers": {
+          "Draw Grid": {
+            "Name": "Blue Grid",
+            "Description": "This draws a Grid",
+            "Kind": 22,
+            "Visible": true,
+            "Location": {
+              "X": "0",
+              "Y": "0"
+            },
+            "Size": null,
+            "Colors": {
+              "ForeColor": "100,128,0,0",
+              "BackColor": "Blue50%"
+            },
+            "Lines": null,
+            "Text": null,
+            "Texture": null,
+            "Geometry": null,
+            "CallBackCodeFile": "GridExample.cs",
+            "TimeOff": 5000
+          }
+        }
+      }
+    ]
+  }
+]
