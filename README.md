@@ -1,7 +1,7 @@
 # Direct2DGameOverlay
-An Overlay for games or any program.
+An Overlay for games or any program using [Direct2D](https://learn.microsoft.com/en-us/windows/win32/direct2d/direct2d-portal).
 
-Still on alpha but the Release works.
+Still on alpha but i'll be publishing working Releases.
 Tested with the 'Elite Dangerous' game.
 
 Based on:
