@@ -10,5 +10,5 @@ Based on:
 - [Process.NET](https://github.com/lolp1/Process.NET)
 
 Requeriments:
-- [.NET Framework 4.8[(https://dotnet.microsoft.com/es-es/download/dotnet-framework/net48)
+- [.NET Framework 4.8](https://dotnet.microsoft.com/es-es/download/dotnet-framework/net48)
 - [Visual Studio 2022](https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=Community&channel=Release&version=VS2022)
