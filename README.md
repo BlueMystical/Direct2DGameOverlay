@@ -8,7 +8,9 @@ Based on:
 - [SharpDX](https://github.com/sharpdx/SharpDX)
 - [Overlay.NET](https://github.com/lolp1/Overlay.NET) 
 - [Process.NET](https://github.com/lolp1/Process.NET)
-- [NIKBH - NonInvasiveKeyboardHook](https://github.com/kfirprods/NonInvasiveKeyboardHook)
+- [NonInvasiveKeyboardHook - NIKBH](https://github.com/kfirprods/NonInvasiveKeyboardHook)
+- [FontAwesome.Sharp](https://github.com/awesome-inc/FontAwesome.Sharp#windows-forms)
+- [LoreSoft.MathExpressions](https://loresoft.com/Calculator-NET-Calculator-that-evaluates-math-expressions)
 
 Requeriments:
 - [.NET Framework 4.8](https://dotnet.microsoft.com/es-es/download/dotnet-framework/net48)
