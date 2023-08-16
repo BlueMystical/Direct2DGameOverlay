@@ -4,7 +4,7 @@ An Overlay for games or any program using [Direct2D](https://learn.microsoft.com
 Still on alpha but i'll be publishing working Releases.
 Tested with the 'Elite Dangerous' game.
 
-Based on:
+Libraries / Projects used:
 - [SharpDX](https://github.com/sharpdx/SharpDX)
 - [Overlay.NET](https://github.com/lolp1/Overlay.NET) 
 - [Process.NET](https://github.com/lolp1/Process.NET)
@@ -22,3 +22,6 @@ Features:
 - No Coding needed to draw basic shapes on the overlay, you can either use the UI or edit the JSON.
 - But.. to draw advanced stuff you can attach a code file (C#) in the example i draw a blue grid from an external module.
 - The overlay can be attached to any window or game, even to the Notepad !!!
+
+To Do:
+- Game event reactions.
