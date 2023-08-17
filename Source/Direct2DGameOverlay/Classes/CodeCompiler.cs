@@ -1,4 +1,5 @@
 ﻿using DirectXOverlay;
+using Microsoft.CodeDom.Providers.DotNetCompilerPlatform;
 using Microsoft.CSharp;
 using Overlay.NET.Directx;
 using System;
@@ -13,7 +14,7 @@ namespace DXOverlay.ExternalModule
 {
 	public class CodeCompiler
 	{
-		private CSharpCodeProvider provider = new CSharpCodeProvider();
+		private Microsoft.CodeDom.Providers.DotNetCompilerPlatform.CSharpCodeProvider provider;
 		private CompilerParameters parameters = new CompilerParameters();
 		private CompilerResults results;
 		private Assembly assembly;
@@ -29,7 +30,11 @@ namespace DXOverlay.ExternalModule
 		{
 			try
 			{
-				provider = new CSharpCodeProvider();
+				// RoslynCodeDomProvider for C# Compiler:  https://github.com/aspnet/RoslynCodeDomProvider
+				provider = new Microsoft.CodeDom.Providers.DotNetCompilerPlatform.CSharpCodeProvider(new Dictionary<string, string>
+				{
+					{ "CompilerVersion", "v4.8" }
+				});
 				parameters = new CompilerParameters();
 
 				// Agregar Referencias a Ensamblados del Framework que necesite el codigo a ejecutar:
@@ -37,20 +42,22 @@ namespace DXOverlay.ExternalModule
 				parameters.ReferencedAssemblies.Add("System.Core.dll");             //<- Linq y otros
 				parameters.ReferencedAssemblies.Add("System.Drawing.dll");          //<- Pues eso -> Drawing.
 				parameters.ReferencedAssemblies.Add("System.Windows.Forms.dll");    //<- Mostrar Cuadros de Texto y Ventanas
-				parameters.ReferencedAssemblies.Add("System.Text.Json.dll");        //<- Serialización de Datos
-				parameters.ReferencedAssemblies.Add("System.Net.Http.dll");			//<- Porn watching
+				parameters.ReferencedAssemblies.Add("System.Net.Http.dll");         //<- Porn watching
+				parameters.ReferencedAssemblies.Add("System.Memory.dll");
+				parameters.ReferencedAssemblies.Add("Microsoft.CSharp.dll");
 
 				parameters.ReferencedAssemblies.Add(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Overlay.NET.dll"));
 				parameters.ReferencedAssemblies.Add(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "SharpDX.dll"));
 				parameters.ReferencedAssemblies.Add(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "SharpDX.Direct2D1.dll"));
 				parameters.ReferencedAssemblies.Add(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "SharpDX.DXGI.dll"));				
-				parameters.ReferencedAssemblies.Add(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "SharpDX.Mathematics.dll"));
+				parameters.ReferencedAssemblies.Add(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "SharpDX.Mathematics.dll")); 
+				parameters.ReferencedAssemblies.Add(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Newtonsoft.Json.dll"));
 				//parameters.ReferencedAssemblies.Add(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ""));
-
 
 				//Opciones de Generacion:
 				parameters.GenerateInMemory = true;     //<- True = Compilacion en Memoria, false = Compilacion en Archivo          
-				parameters.GenerateExecutable = true;   //<- True - Generacion de un EXE, false - Generacion de un DLL
+				parameters.GenerateExecutable = true;   //<- True - Generacion de un EXE, false - Generacion de un DLL														
+				parameters.TreatWarningsAsErrors = false; // Set whether to treat all warnings as errors.
 
 				if (!string.IsNullOrEmpty(pCode))
 				{
@@ -88,6 +95,12 @@ namespace DXOverlay.ExternalModule
 			
 		}
 
+		private static string CompilerFullPath(string relativePath)
+		{
+			string frameworkFolder = Path.GetDirectoryName(typeof(object).Assembly.Location);
+			return Path.Combine(frameworkFolder, relativePath);
+		}
+
 		/// <summary>[To be called from the Overlay] Sets all the available resources and leaves a log</summary>
 		/// <param name="pModuleName">Name of this module</param>
 		/// <param name="_brushes">List of Available Colors</param>
@@ -100,7 +113,7 @@ namespace DXOverlay.ExternalModule
 				MethodInfo func = program.GetMethod("Initialize");
 				if (func != null)
 				{
-					object result = func.Invoke(null, new object[] { pModuleName, brushes, fonts, textures, true });
+					object result = func.Invoke(null, new object[] { Path.GetFileNameWithoutExtension(pModuleName), brushes, fonts, textures, true });
 					if (result != null)
 					{
 						if (results.Errors != null && results.Errors.Count > 0)
