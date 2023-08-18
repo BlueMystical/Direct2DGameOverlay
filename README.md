@@ -11,7 +11,7 @@ Libraries / Projects Used:
 - [NonInvasiveKeyboardHook - NIKBH](https://github.com/kfirprods/NonInvasiveKeyboardHook)
 - [FontAwesome.Sharp](https://github.com/awesome-inc/FontAwesome.Sharp#windows-forms)
 - [Json.NET](https://www.newtonsoft.com/json)
-- [LoreSoft.MathExpressions](https://loresoft.com/Calculator-NET-Calculator-that-evaluates-math-expressions)
+- [MathExpressions](https://loresoft.com/Calculator-NET-Calculator-that-evaluates-math-expressions)
 - [RoslynCodeDomProvider](https://github.com/aspnet/RoslynCodeDomProvider)
 
 Requeriments:
