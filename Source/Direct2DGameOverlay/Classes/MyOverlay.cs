@@ -327,7 +327,6 @@ namespace DirectXOverlay
 						Point _location = (layer.Value.Location != null) ? layer.Value.Location.ToPoint(this._TargetWindow) : Point.Empty;
 						Size _size = (layer.Value.Size != null) ? layer.Value.Size.ToSize(this._TargetWindow) : Size.Empty;
 
-						
 
 						if (layer.Value.Kind == LayerType.ExternalModule)
 						{
@@ -341,7 +340,7 @@ namespace DirectXOverlay
 									if (File.Exists(_Mpath))
 									{
 										_ExecutingCode = true;
-										//Task.Factory.StartNew(() => {
+										Task.Factory.StartNew(() => {
 											layer.Value.CallBackCode = Helper.ReadTextFile(_Mpath, Helper.TextEncoding.UTF8);
 											if (!string.IsNullOrEmpty(layer.Value.CallBackCode))
 											{
@@ -352,7 +351,7 @@ namespace DirectXOverlay
 												}
 											}
 											_ExecutingCode = false;
-										//});
+										});
 									}
 								}
 								else

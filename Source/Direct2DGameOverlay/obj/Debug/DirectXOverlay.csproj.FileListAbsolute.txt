@@ -1,0 +1,5 @@
+D:\Documentos\@Proyectos\VS-2022\DirectXOverlay\Direct2DGameOverlay\bin\Debug\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+D:\Documentos\@Proyectos\VS-2022\DirectXOverlay\Direct2DGameOverlay\bin\Debug\roslyn\Microsoft.CodeAnalysis.dll
+D:\Documentos\@Proyectos\VS-2022\DirectXOverlay\Direct2DGameOverlay\bin\Debug\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+D:\Documentos\@Proyectos\VS-2022\DirectXOverlay\Direct2DGameOverlay\bin\Debug\roslyn\System.Buffers.dll
+D:\Documentos\@Proyectos\VS-2022\DirectXOverlay\Direct2DGameOverlay\bin\Debug\roslyn\VBCSCompiler.exe

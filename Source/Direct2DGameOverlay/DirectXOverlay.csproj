@@ -35,6 +35,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Blue.TextDataTable, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\Blue.TextDataTable.dll</HintPath>
+    </Reference>
     <Reference Include="FontAwesome.Sharp">
       <HintPath>lib\FontAwesome.Sharp.dll</HintPath>
     </Reference>

@@ -1,6 +1,4 @@
 ﻿using DirectXOverlay;
-using Microsoft.CodeDom.Providers.DotNetCompilerPlatform;
-using Microsoft.CSharp;
 using Overlay.NET.Directx;
 using System;
 using System.CodeDom.Compiler;
@@ -44,6 +42,8 @@ namespace DXOverlay.ExternalModule
 				parameters.ReferencedAssemblies.Add("System.Windows.Forms.dll");    //<- Mostrar Cuadros de Texto y Ventanas
 				parameters.ReferencedAssemblies.Add("System.Net.Http.dll");         //<- Porn watching
 				parameters.ReferencedAssemblies.Add("System.Memory.dll");
+				parameters.ReferencedAssemblies.Add("System.Xml.dll");
+				parameters.ReferencedAssemblies.Add("System.Xml.Linq.dll");
 				parameters.ReferencedAssemblies.Add("Microsoft.CSharp.dll");
 
 				parameters.ReferencedAssemblies.Add(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Overlay.NET.dll"));
@@ -52,7 +52,7 @@ namespace DXOverlay.ExternalModule
 				parameters.ReferencedAssemblies.Add(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "SharpDX.DXGI.dll"));				
 				parameters.ReferencedAssemblies.Add(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "SharpDX.Mathematics.dll")); 
 				parameters.ReferencedAssemblies.Add(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Newtonsoft.Json.dll"));
-				//parameters.ReferencedAssemblies.Add(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ""));
+				parameters.ReferencedAssemblies.Add(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Blue.TextDataTable.dll"));
 
 				//Opciones de Generacion:
 				parameters.GenerateInMemory = true;     //<- True = Compilacion en Memoria, false = Compilacion en Archivo          
