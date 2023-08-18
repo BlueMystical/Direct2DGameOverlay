@@ -13,6 +13,7 @@ Libraries / Projects Used:
 - [Json.NET](https://www.newtonsoft.com/json)
 - [MathExpressions](https://loresoft.com/Calculator-NET-Calculator-that-evaluates-math-expressions)
 - [RoslynCodeDomProvider](https://github.com/aspnet/RoslynCodeDomProvider)
+- [Text-DataTable](https://github.com/BlueMystical/Text-DataTable)
 
 Requeriments:
 - [.NET Framework 4.8](https://dotnet.microsoft.com/es-es/download/dotnet-framework/net48)
