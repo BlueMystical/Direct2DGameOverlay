@@ -21,20 +21,9 @@ Font Resource - Key:'MessageText',	Value:[5]
 Font Resource - Key:'Arial;14',	Value:[6]
 Texture Resource - Key:'Logo EDHM',	Value:[0]
 Texture Resource - Key:'Tirlana',	Value:[1]
-[18/8/2023 07:23:48 p. m.]: Journal file: C:\Users\Jhollman\Saved Games\Frontier Developments\Elite Dangerous\Journal.2023-07-30T145427.01.log
-[18/8/2023 07:23:48 p. m.]: Welcome Commander 'Blue mystic'
-[18/8/2023 07:23:48 p. m.]: Ship Loadout: viper_mkiv (Normandy sr-72)
-[18/8/2023 07:23:48 p. m.]: LaunchSRV Event: combat_multicrew_srv_01 (SRV Scorpion)
-[18/8/2023 07:23:48 p. m.]: DockSRV Event: combat_multicrew_srv_01 (SRV Scorpion)
-[18/8/2023 07:23:48 p. m.]: Ship Loadout: viper_mkiv (Normandy sr-72)
-[18/8/2023 07:23:48 p. m.]: Ship Loadout: viper_mkiv (Normandy sr-72)
-[18/8/2023 07:23:48 p. m.]: Ship Loadout: viper_mkiv (Normandy sr-72)
-[18/8/2023 07:23:49 p. m.]: Ship Loadout: federation_corvette (Vette FC-01)
-[18/8/2023 07:23:49 p. m.]: Ship Loadout: empire_courier (Thunderbolt IC-TB)
-[18/8/2023 07:23:49 p. m.]: Ship Loadout: ferdelance (Overpowered FDL-OP)
-[18/8/2023 07:23:49 p. m.]: Ship Loadout: empire_cutter (Golden Heart IC-GH)
-[18/8/2023 07:23:49 p. m.]: Ship Loadout: federation_corvette (Vette FC-01)
-[18/8/2023 07:23:49 p. m.]: Ship Loadout: krait_mkii (AlienHunter K3-AH)
-[18/8/2023 07:23:49 p. m.]: Ship Loadout: ferdelance (Overpowered FDL-OP)
-[18/8/2023 07:23:49 p. m.]: Ship Loadout: empire_courier (Thunderbolt IC-TB)
-[18/8/2023 07:23:49 p. m.]: Ship Loadout: federation_corvette (Vette FC-01)
+[19/8/2023 01:39:06 p. m.]: %USERPROFILE% found at 'C:\Users\Jhollman\Saved Games\Frontier Developments\Elite Dangerous'.
+[19/8/2023 01:39:06 p. m.]: Journal file: C:\Users\Jhollman\Saved Games\Frontier Developments\Elite Dangerous\Journal.2023-08-18T211045.01.log
+[19/8/2023 01:39:06 p. m.]: Welcome Commander 'Blue mystic'
+[19/8/2023 01:39:06 p. m.]: Ship Loadout: cobramkiii ( BL-06C)
+[19/8/2023 01:39:06 p. m.]: FSDJump Event: 14 Eridani (1,896ly)
+[19/8/2023 01:39:06 p. m.]: FSDJump ready to show

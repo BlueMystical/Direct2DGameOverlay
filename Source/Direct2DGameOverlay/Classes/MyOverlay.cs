@@ -333,14 +333,18 @@ namespace DirectXOverlay
 							//This calls External Code:
 							if (!string.IsNullOrEmpty(layer.Value.CallBackCodeFile))
 							{
-								if (layer.Value.ExternalModule is null && _ExecutingCode == false)
-								{
-									// Here we load and Compile the External Module:
-									string _Mpath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "modules", "code", layer.Value.CallBackCodeFile);
-									if (File.Exists(_Mpath))
+								//var t = System.Threading.Tasks.Task.Factory.StartNew(delegate
+								//{
+									//if (layer.Value.Executing == false)
+									if (layer.Value.ExternalModule is null && layer.Value.Executing == false)
 									{
-										_ExecutingCode = true;
-										Task.Factory.StartNew(() => {
+										// Here we load and Compile the External Module:
+										string _Mpath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "modules", "code", layer.Value.CallBackCodeFile);
+										if (File.Exists(_Mpath))
+										{
+											//DESA:
+											//DXOverlay.ExternalModule.Programa.Initialize(layer.Value.CallBackCodeFile, _Brushes, _Fonts, _Textures);
+
 											layer.Value.CallBackCode = Helper.ReadTextFile(_Mpath, Helper.TextEncoding.UTF8);
 											if (!string.IsNullOrEmpty(layer.Value.CallBackCode))
 											{
@@ -350,15 +354,19 @@ namespace DirectXOverlay
 													layer.Value.ExternalModule.Initialize(layer.Value.CallBackCodeFile, _Brushes, _Fonts, _Textures);
 												}
 											}
-											_ExecutingCode = false;
-										});
+
+											layer.Value.Executing = true;
+										}
 									}
-								}
-								else
-								{
-									// Here we call the 'Render' method from the External Module
-									layer.Value.ExternalModule?.RenderCode(this.OverlayWindow, this.OverlayWindow.Graphics);
-								}
+									else
+									{
+										// Here we call the 'Render' method from the External Module
+										//DESA:
+										//DXOverlay.ExternalModule.Programa.Render(this.OverlayWindow, this.OverlayWindow.Graphics);
+
+										layer.Value.ExternalModule?.RenderCode(this.OverlayWindow, this.OverlayWindow.Graphics);
+									}
+								//});
 							}
 						}
 						else

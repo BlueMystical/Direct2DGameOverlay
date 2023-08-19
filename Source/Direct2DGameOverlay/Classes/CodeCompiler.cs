@@ -76,6 +76,7 @@ namespace DXOverlay.ExternalModule
 						program = assembly.GetType("DXOverlay.ExternalModule.Programa"); //<- NameSpace y Nombre de la Clase Definidos en el codigo    
 						if (program != null)
 						{
+							//program.GetProperty
 							main = program.GetMethod("Main"); //<- (Tiene que haber un Main)   
 							if (main != null)
 							{

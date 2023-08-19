@@ -4,7 +4,6 @@ using SharpDX.Direct2D1;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.ComponentModel.Design;
 using System.Drawing;
 using System.Drawing.Design;
 using System.Linq;
@@ -128,8 +127,10 @@ namespace DirectXOverlay
 		[Description("Time in miliseconds to trigger an action."), Category("Default"), DefaultValue(5)]
 		public int TimeOff { get; set; } = 5000;
 
+		public bool Executing { get; set; } = false;
 
-		public event EventHandler OnAction = delegate { }; //<- Evento con Manejador, para evitar los Null
+
+        public event EventHandler OnAction = delegate { }; //<- Evento con Manejador, para evitar los Null
 
         public override string ToString()
         {
