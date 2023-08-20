@@ -26,3 +26,31 @@ D:\Documentos\@Proyectos\VS-2022\DirectXOverlay\Overlay.NET\obj\Debug\Overlay.NE
 D:\Documentos\@Proyectos\VS-2022\DirectXOverlay\Overlay.NET\obj\Debug\Overlay.NET.csproj.CopyComplete
 D:\Documentos\@Proyectos\VS-2022\DirectXOverlay\Overlay.NET\obj\Debug\Overlay.NET.dll
 D:\Documentos\@Proyectos\VS-2022\DirectXOverlay\Overlay.NET\obj\Debug\Overlay.NET.pdb
+C:\Users\Blue Mystic\Source\Repos\Direct2DGameOverlay\Source\Overlay.NET\bin\Debug\Overlay.NET.dll.config
+C:\Users\Blue Mystic\Source\Repos\Direct2DGameOverlay\Source\Overlay.NET\bin\Debug\Overlay.NET.dll
+C:\Users\Blue Mystic\Source\Repos\Direct2DGameOverlay\Source\Overlay.NET\bin\Debug\Overlay.NET.pdb
+C:\Users\Blue Mystic\Source\Repos\Direct2DGameOverlay\Source\Overlay.NET\bin\Debug\Process.NET.dll
+C:\Users\Blue Mystic\Source\Repos\Direct2DGameOverlay\Source\Overlay.NET\bin\Debug\SharpDX.Direct2D1.dll
+C:\Users\Blue Mystic\Source\Repos\Direct2DGameOverlay\Source\Overlay.NET\bin\Debug\SharpDX.dll
+C:\Users\Blue Mystic\Source\Repos\Direct2DGameOverlay\Source\Overlay.NET\bin\Debug\SharpDX.DXGI.dll
+C:\Users\Blue Mystic\Source\Repos\Direct2DGameOverlay\Source\Overlay.NET\bin\Debug\SharpDX.Mathematics.dll
+C:\Users\Blue Mystic\Source\Repos\Direct2DGameOverlay\Source\Overlay.NET\bin\Debug\Process.NET.pdb
+C:\Users\Blue Mystic\Source\Repos\Direct2DGameOverlay\Source\Overlay.NET\bin\Debug\Process.NET.xml
+C:\Users\Blue Mystic\Source\Repos\Direct2DGameOverlay\Source\Overlay.NET\bin\Debug\SharpDX.pdb
+C:\Users\Blue Mystic\Source\Repos\Direct2DGameOverlay\Source\Overlay.NET\bin\Debug\SharpDX.Direct2D1.pdb
+C:\Users\Blue Mystic\Source\Repos\Direct2DGameOverlay\Source\Overlay.NET\bin\Debug\SharpDX.Direct2D1.xml
+C:\Users\Blue Mystic\Source\Repos\Direct2DGameOverlay\Source\Overlay.NET\bin\Debug\SharpDX.DXGI.pdb
+C:\Users\Blue Mystic\Source\Repos\Direct2DGameOverlay\Source\Overlay.NET\bin\Debug\SharpDX.DXGI.xml
+C:\Users\Blue Mystic\Source\Repos\Direct2DGameOverlay\Source\Overlay.NET\bin\Debug\SharpDX.Mathematics.pdb
+C:\Users\Blue Mystic\Source\Repos\Direct2DGameOverlay\Source\Overlay.NET\bin\Debug\SharpDX.Mathematics.xml
+C:\Users\Blue Mystic\Source\Repos\Direct2DGameOverlay\Source\Overlay.NET\obj\Debug\Overlay.NET.csproj.AssemblyReference.cache
+C:\Users\Blue Mystic\Source\Repos\Direct2DGameOverlay\Source\Overlay.NET\obj\Debug\Wpf\OverlayWindow.baml
+C:\Users\Blue Mystic\Source\Repos\Direct2DGameOverlay\Source\Overlay.NET\obj\Debug\Wpf\OverlayWindow.g.cs
+C:\Users\Blue Mystic\Source\Repos\Direct2DGameOverlay\Source\Overlay.NET\obj\Debug\Overlay.NET_MarkupCompile.cache
+C:\Users\Blue Mystic\Source\Repos\Direct2DGameOverlay\Source\Overlay.NET\obj\Debug\Overlay.NET.g.resources
+C:\Users\Blue Mystic\Source\Repos\Direct2DGameOverlay\Source\Overlay.NET\obj\Debug\Overlay.NET.Properties.Resources.resources
+C:\Users\Blue Mystic\Source\Repos\Direct2DGameOverlay\Source\Overlay.NET\obj\Debug\Overlay.NET.csproj.GenerateResource.cache
+C:\Users\Blue Mystic\Source\Repos\Direct2DGameOverlay\Source\Overlay.NET\obj\Debug\Overlay.NET.csproj.CoreCompileInputs.cache
+C:\Users\Blue Mystic\Source\Repos\Direct2DGameOverlay\Source\Overlay.NET\obj\Debug\Overlay.NET.csproj.CopyComplete
+C:\Users\Blue Mystic\Source\Repos\Direct2DGameOverlay\Source\Overlay.NET\obj\Debug\Overlay.NET.dll
+C:\Users\Blue Mystic\Source\Repos\Direct2DGameOverlay\Source\Overlay.NET\obj\Debug\Overlay.NET.pdb

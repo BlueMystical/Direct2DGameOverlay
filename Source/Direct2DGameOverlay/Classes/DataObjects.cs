@@ -1,4 +1,5 @@
 ﻿using DXOverlay.ExternalModule;
+using Newtonsoft.Json;
 using Process.NET.Windows;
 using SharpDX.Direct2D1;
 using System;
@@ -7,7 +8,6 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Design;
 using System.Linq;
-using System.Text.Json.Serialization;
 using System.Windows.Forms;
 using System.Windows.Forms.Design;
 
