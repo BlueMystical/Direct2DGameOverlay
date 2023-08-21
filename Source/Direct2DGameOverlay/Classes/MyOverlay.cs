@@ -95,7 +95,7 @@ namespace DirectXOverlay
 		Box2D,
 		Box3D,
 
-		Circle,	//5
+		Circle, //5
 		CircleFill,
 
 		Rectangle,
@@ -110,7 +110,7 @@ namespace DirectXOverlay
 		TargetReticle_2,
 		TargetReticle_3, //15
 
-		FPS,	
+		FPS,
 		Texture,
 		Geometry,
 		GeometryFilled,
@@ -119,18 +119,18 @@ namespace DirectXOverlay
 		GpuUsage,
 		ExternalModule
 	}
-	
+
 
 
 	[RegisterPlugin("DirectXOverlay", "Blue Mystic", "CustomDXOverlay", "1.0.0", "Custom Implementation of DirectXoverlay")]
 	public class DXOverlayPlugin : DirectXOverlayPlugin
 	{
 		#region Private Members
-		
+
 		private readonly TickEngine _tickEngine = new TickEngine();
 		public readonly ISettings<DemoOverlaySettings> Settings = new SerializableSettings<DemoOverlaySettings>();
-		
-		
+
+
 		private int _Defaultfont, _DefaultfontBold, _DefaultfontUnderline;
 		private int _DefaultBrush;
 		private int _DefaultBrushTransparent;
@@ -166,7 +166,7 @@ namespace DirectXOverlay
 		#endregion
 
 		#region Public Methods
-		
+
 		public override void Initialize(IWindow targetWindow)
 		{
 			// Set target window by calling the base method
@@ -303,7 +303,7 @@ namespace DirectXOverlay
 			}
 		}
 
-	
+
 
 		/// <summary>***HERE WE DRAW STUFF***</summary>
 		protected void InternalRender()
@@ -333,40 +333,38 @@ namespace DirectXOverlay
 							//This calls External Code:
 							if (!string.IsNullOrEmpty(layer.Value.CallBackCodeFile))
 							{
-								//var t = System.Threading.Tasks.Task.Factory.StartNew(delegate
-								//{
-									//if (layer.Value.Executing == false)
-									if (layer.Value.ExternalModule is null && layer.Value.Executing == false)
+								//DESA:
+								//if (layer.Value.Executing == false)
+								if (layer.Value.ExternalModule is null && layer.Value.Executing == false)
+								{
+									// Here we load and Compile the External Module:
+									string _Mpath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "modules", "code", layer.Value.CallBackCodeFile);
+									if (File.Exists(_Mpath))
 									{
-										// Here we load and Compile the External Module:
-										string _Mpath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "modules", "code", layer.Value.CallBackCodeFile);
-										if (File.Exists(_Mpath))
-										{
-											//DESA:
-											//DXOverlay.ExternalModule.Programa.Initialize(layer.Value.CallBackCodeFile, _Brushes, _Fonts, _Textures);
-
-											layer.Value.CallBackCode = Helper.ReadTextFile(_Mpath, Helper.TextEncoding.UTF8);
-											if (!string.IsNullOrEmpty(layer.Value.CallBackCode))
-											{
-												layer.Value.ExternalModule = new DXOverlay.ExternalModule.CodeCompiler(layer.Value.CallBackCode);
-												if (layer.Value.ExternalModule != null)
-												{
-													layer.Value.ExternalModule.Initialize(layer.Value.CallBackCodeFile, _Brushes, _Fonts, _Textures);
-												}
-											}
-
-											layer.Value.Executing = true;
-										}
-									}
-									else
-									{
-										// Here we call the 'Render' method from the External Module
 										//DESA:
-										//DXOverlay.ExternalModule.Programa.Render(this.OverlayWindow, this.OverlayWindow.Graphics);
+										//DXOverlay.ExternalModule.Programa.Initialize(layer.Value.CallBackCodeFile, _Brushes, _Fonts, _Textures);
 
-										layer.Value.ExternalModule?.RenderCode(this.OverlayWindow, this.OverlayWindow.Graphics);
+										layer.Value.CallBackCode = Helper.ReadTextFile(_Mpath, Helper.TextEncoding.UTF8);
+										if (!string.IsNullOrEmpty(layer.Value.CallBackCode))
+										{
+											layer.Value.ExternalModule = new DXOverlay.ExternalModule.CodeCompiler(layer.Value.CallBackCode);
+											if (layer.Value.ExternalModule != null)
+											{
+												layer.Value.ExternalModule.Initialize(layer.Value.CallBackCodeFile, _Brushes, _Fonts, _Textures);
+											}
+										}
+
+										layer.Value.Executing = true;
 									}
-								//});
+								}
+								else
+								{
+									// Here we call the 'Render' method from the External Module
+									//DESA:
+									//DXOverlay.ExternalModule.Programa.Render(this.OverlayWindow, this.OverlayWindow.Graphics);
+
+									layer.Value.ExternalModule?.RenderCode(this.OverlayWindow, this.OverlayWindow.Graphics);
+								}
 							}
 						}
 						else
