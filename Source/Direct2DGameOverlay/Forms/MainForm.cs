@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -379,10 +380,16 @@ namespace DirectXOverlay
 				d3DOverlay.Colors["Purple"] = Color.FromArgb(255, Color.Purple);
 				d3DOverlay.Colors["Pink"] = Color.FromArgb(255, Color.Pink);
 				d3DOverlay.Colors["Brown"] = Color.FromArgb(255, Color.Brown);
+
 				d3DOverlay.Colors["Black50%"] = Color.FromArgb(127, Color.Black);
 				d3DOverlay.Colors["Dark50%"] = Color.FromArgb(127, 30, 30, 30);
 
+				d3DOverlay.Fonts["Consolas;10;0"] = new Font(new FontFamily("Consolas"), 10);
 				d3DOverlay.Fonts["Consolas;12;0"] = new Font(new FontFamily("Consolas"), 12);
+				d3DOverlay.Fonts["Consolas;14;0"] = new Font(new FontFamily("Consolas"), 14);
+				d3DOverlay.Fonts["Consolas;16;0"] = new Font(new FontFamily("Consolas"), 16);
+				d3DOverlay.Fonts["Consolas;18;0"] = new Font(new FontFamily("Consolas"), 18);
+
 				d3DOverlay.Fonts["Arial;14;0"] = new Font(new FontFamily("Arial"), 14);
 
 				//Fonts for MessageBox:
