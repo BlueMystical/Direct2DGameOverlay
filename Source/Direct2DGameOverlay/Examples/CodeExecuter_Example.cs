@@ -5,33 +5,54 @@ using Overlay.NET.Directx;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
+using System.Windows.Forms;
+using System.Threading.Tasks;
+using System.Collections;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Tab;
 
 
+/* DO NOT change the NameSpace and Class names  */
 namespace DXOverlay.ExternalModule
 {
-	/* Do NOT change the NameSpace and Class names  */
 	public static class Programa
 	{
+		/// <summary>Name of this Module</summary>
 		private static string ModuleName = string.Empty;
 
+		/// <summary>[Pre-Loaded Resources] Colors</summary>
 		private static Dictionary<string, int> brushes { get; set; }
+
+		/// <summary>[Pre-Loaded Resources] Fonts</summary>
 		private static Dictionary<string, int> fonts;
+
+		/// <summary>[Pre-Loaded Resources] Images</summary>
 		private static Dictionary<string, int> textures;
 
+		/// <summary>Instance of the Overlay Window</summary>
+		private static DirectXOverlayWindow Overlay;
+
+		/// <summary>This has the Drawing methods</summary>
+		private static Direct2DRenderer GraphicRender;
+
+		#region ED Journal Events
+
+		/* FOR SHOWING DATA WHEN A GAME EVENT IS DETECTED */
 		private static List<dynamic> DataToShow = null;
 
-		private static bool JournalWatcherIsRunning = true;
-		private static string WatchedFile = string.Empty;
+		private static bool JournalWatcherIsRunning = true; //<- ED's Journal is being watched
+		private static string WatchedFile = string.Empty;   //<- Current Journal File
+		private static bool AllLinesRead { get; set; } = false;
 
-		private static TextDataTable BlueDataTable;
-		private static TableConfiguration BlueDTConfig;
-		private static string TextToShow = string.Empty;
-		private static byte[] ImageToShow = null;
+        private static string TextToShow = string.Empty;    //<- to show data in Text mode
+		private static SharpDX.Direct2D1.Bitmap ImageToShow = null; //<- To show Images
 
+		#endregion
+
+		// To auto-dismiss messages
 		private static DateTime StartTime = DateTime.MinValue;
 		private static int TimeOff = 20000;
 
@@ -43,19 +64,27 @@ namespace DXOverlay.ExternalModule
 		//}
 
 		/// <summary>[To be called from the Parent Overlay] Sets all the available resources.</summary>
+		/// <param name="pModuleName">Name of this Module</param>
+		/// <param name="pOverlayWindow">A reference to the Overlay Window</param>
+		/// <param name="pGraphics">A reference to the Graphics Device who has the drawing methods.</param>
 		/// <param name="_brushes">List of Available Colors</param>
 		/// <param name="_fonts">List of Available Fonts</param>
 		/// <param name="_textures">List of Available Images</param>
-		public static bool Initialize(string pName, Dictionary<string, int> _brushes, Dictionary<string, int> _fonts, Dictionary<string, int> _textures, bool ShowLog = true)
+		/// <param name="ShowLog">[Default true] write a log enumerating the available pre-loaded resources.</param>
+		public static bool Initialize(string pModuleName, DirectXOverlayWindow pOverlayWindow, Direct2DRenderer pGraphics, Dictionary<string, int> _brushes, Dictionary<string, int> _fonts, Dictionary<string, int> _textures, bool ShowLog = true)
 		{
-			// This method is invoked only once
+			/*  THIS METHOD SHOULD BE INVOKED ONLY ONCE  */
 			bool _ret = false;
 			try
 			{
-				ModuleName = System.IO.Path.GetFileNameWithoutExtension(pName);
+				ModuleName = System.IO.Path.GetFileNameWithoutExtension(pModuleName);
+				Overlay = pOverlayWindow;
+				GraphicRender = pGraphics;
+
 				brushes = _brushes;
 				fonts = _fonts;
 				textures = _textures;
+
 				// Resources used here must be declared on the 'layer' this code is asociated to
 
 				if (ShowLog)  //[OPTIONAL] Save log showing available Resources:
@@ -80,7 +109,7 @@ namespace DXOverlay.ExternalModule
 					};
 				}
 
-				// Here you can call methods who do non drawing or 'Rendering' stuff.
+				// Here you can call methods who do non drawing stuff.
 				ReadPlayerJournal();
 
 				_ret = true;
@@ -94,9 +123,7 @@ namespace DXOverlay.ExternalModule
 
 		/// <summary>This method is called from the Parent Overlay once per rendered frame, which means around 60 times per second.
 		/// <para>** DO NOT ADD TOO HEAVY STUFF HERE OR YOU WILL PAY FOR IT IN PERFORMANCE (FPS)! **</para></summary>
-		/// <param name="OverlayWindow">A reference to the Overlay Window</param>
-		/// <param name="Graphics">A reference to the Graphics Device who has the drawing methods.</param>
-		public static string Render(DirectXOverlayWindow pOverlayWindow, Direct2DRenderer pGraphics)
+		public static string Render()
 		{
 			string _Response = string.Empty;
 			try
@@ -130,7 +157,7 @@ namespace DXOverlay.ExternalModule
 				#endregion
 
 				#region EXAMPLE 2:  Show Information from a Game Event: 'FSDJump' in a Text Table
-				
+				/*
 				// The 'TextToShow' is generated by the 'PlayerJournal_DetectEvents' method.
 				if (!string.IsNullOrEmpty(TextToShow))
 				{
@@ -154,19 +181,43 @@ namespace DXOverlay.ExternalModule
 						pGraphics.DrawTextWithBackground(fonts["Consolas;12;0"], brushes["White"], brushes["Blue70%"], RBox, RemainingMS.ToString("00"));
 					}
 				}
-				
+				*/
 				#endregion
 
 				#region EXAMPLE 3:  Show Information from a Game Event: 'FSDJump' in a Image
-				/*
+
 				// The 'ImageToShow' is generated by the 'PlayerJournal_DetectEvents' method.
 				if (ImageToShow != null)
 				{
+
 					Point Location = new Point(30, 150);
 
-					pGraphics.DrawImage(new Overlay.NET.Common.Image(pGraphics._device, ImageToShow), Location.X, Location.Y);
+					GraphicRender.DrawImage(
+						ImageToShow,
+						new Rectangle(Location, new Size((int)ImageToShow.Size.Width, (int)ImageToShow.Size.Height)),
+						1.0f);
+
+					// CountDown for Message dimissal
+					if (StartTime == DateTime.MinValue) StartTime = DateTime.Now;
+					decimal ElapsedMS = (decimal)(DateTime.Now.Subtract(StartTime)).TotalMilliseconds;
+					if (ElapsedMS >= TimeOff)
+					{
+						ImageToShow = null;
+						StartTime = DateTime.MinValue;
+					}
+					else
+					{
+						//Show remaining Time
+						int RemainingMS = Convert.ToInt32((TimeOff - ElapsedMS) / 1000m);
+
+						GraphicRender.DrawTextWithBackground(
+							fonts["Consolas;12;0"],
+							brushes["White"], brushes["Blue70%"],
+							new Rectangle(Location, new Size(14, 14)),
+							RemainingMS.ToString("00"));
+					}
 				}
-				*/
+
 				#endregion
 			}
 			catch (Exception ex)
@@ -186,6 +237,8 @@ namespace DXOverlay.ExternalModule
 		{
 			LogMessage(ex.Message + ex.StackTrace);
 		}
+		/// <summary>Writes a log file with the provided message.</summary>
+		/// <param name="pMessage">Message to be logged.</param>
 		private static void LogMessage(string pMessage)
 		{
 			string _LogPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "modules", "code", ModuleName + ".log");
@@ -206,8 +259,7 @@ namespace DXOverlay.ExternalModule
 			return result;
 		}
 
-		/// <summary>Convierte el Array de Bytes en una Imagen.</summary>
-		/// <param name="byteArrayIn">DAtos a guardar</param>
+		// To Convert Images to and from Byte Array.
 		public static Image ToImage(this byte[] byteArrayIn)
 		{
 			Image returnImage = null;
@@ -217,7 +269,6 @@ namespace DXOverlay.ExternalModule
 			}
 			return returnImage;
 		}
-
 		public static byte[] ToByteArray(this System.Drawing.Image imageIn)
 		{
 			byte[] retorno = null;
@@ -233,34 +284,63 @@ namespace DXOverlay.ExternalModule
 			return retorno;
 		}
 
-
-		/// <summary>Abre la Imagen indicada (si existe) sin dejarla 'en uso'.</summary>
-		/// <param name="_ImagePath">Ruta Completa al Archivo</param>
-		public static Image OpenImage(string _ImagePath, string _DefaultImage = "")
+		private static string Send_WEB_Request(string pURL, string pMethod = "POST", string jsonData = "", params key_value[] pHeaders)
 		{
-			//Abre una Imagen sin dejarla 'en uso':
-			Image _ret = null;
+			string _ret = string.Empty;
+
 			try
 			{
-				if (File.Exists(_ImagePath))
+				if (pURL != null && pURL != string.Empty)
 				{
-					using (var s = new System.IO.FileStream(_ImagePath, System.IO.FileMode.Open))
+					byte[] byteArray = Encoding.UTF8.GetBytes(jsonData);
+
+					//Esto es para permitir la Solicitud con el protocolo HTTPS:
+					ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls
+								| SecurityProtocolType.Tls11
+								| SecurityProtocolType.Tls12
+								| SecurityProtocolType.Ssl3;
+
+					WebRequest request = WebRequest.Create(pURL);
+					request.Method = pMethod;
+					request.ContentType = "application/json";
+					request.ContentLength = byteArray.Length;
+
+					if (pHeaders != null && pHeaders.Length > 0)
 					{
-						_ret = Image.FromStream(s);
-					}
-				}
-				else
-				{
-					if (_DefaultImage != string.Empty && File.Exists(_DefaultImage))
-					{
-						using (var s = new System.IO.FileStream(_DefaultImage, System.IO.FileMode.Open))
+						foreach (key_value _Header in pHeaders)
 						{
-							_ret = Image.FromStream(s);
+							request.Headers.Add(_Header.key, _Header.value);
+						}
+					}
+
+					//Aqui se adjuntan los datos al Cuerpo de la Solicitud:
+					if (jsonData != null && jsonData != string.Empty)
+					{
+						using (var reqStream = request.GetRequestStream())
+						{
+							reqStream.Write(byteArray, 0, byteArray.Length);
+						}
+					}
+
+					using (var response = request.GetResponse())
+					{
+						if (((HttpWebResponse)response).StatusCode == HttpStatusCode.OK)
+						{
+							using (var respStream = response.GetResponseStream())
+							{
+								using (var reader = new StreamReader(respStream))
+								{
+									_ret = reader.ReadToEnd();
+								}
+							}
 						}
 					}
 				}
 			}
-			catch { }
+			catch (Exception ex)
+			{
+				LogExeption(ex);
+			}
 			return _ret;
 		}
 
@@ -332,60 +412,55 @@ namespace DXOverlay.ExternalModule
 		private static void PlayerJournal_WatchFile(string pFilePath)
 		{
 			/* LEE EL ARCHIVO DE LOG DEL JORNAL Y LO MANTIENE ABIERTO REACCIONANDO A SUS CAMBIOS  */
-			//var t = System.Threading.Tasks.Task.Factory.StartNew(delegate
-			//{
-				if (File.Exists(pFilePath) && WatchedFile != pFilePath)
+			if (File.Exists(pFilePath) && WatchedFile != pFilePath)
+			{
+				WatchedFile = pFilePath;
+				LogMessage(string.Format("Journal file: {0}", pFilePath));
+
+				var wh = new System.Threading.AutoResetEvent(false);
+				var LogWatcher = new FileSystemWatcher(".")
 				{
-					WatchedFile = pFilePath;
-					LogMessage(string.Format("Journal file: {0}", pFilePath));
+					Path = System.IO.Path.GetDirectoryName(pFilePath),  //<- Obtiene el Path: (Sin archivo ni extension)
+					Filter = System.IO.Path.GetFileName(pFilePath),     //<- Nombre del Archivo con Extension (Sin Ruta)
+					NotifyFilter = NotifyFilters.LastAccess | NotifyFilters.LastWrite,
+					EnableRaisingEvents = true
+				};
+				LogWatcher.Changed += (sender, eventArgs) =>
+				{
+					wh.Set(); //<- Avisa que hay Cambios en el Archivo
+				};
 
-					var wh = new System.Threading.AutoResetEvent(false);
-					var LogWatcher = new FileSystemWatcher(".")
+				//El archivo se abre en modo Compartido:
+				var fs = new FileStream(pFilePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+				using (var sr = new StreamReader(fs))
+				{
+					string Line = string.Empty;
+					while (JournalWatcherIsRunning) //<- Poner en False para dejar de Leer el Archivo
 					{
-						Path = System.IO.Path.GetDirectoryName(pFilePath),  //<- Obtiene el Path: (Sin archivo ni extension)
-						Filter = System.IO.Path.GetFileName(pFilePath),     //<- Nombre del Archivo con Extension (Sin Ruta)
-						NotifyFilter = NotifyFilters.LastAccess | NotifyFilters.LastWrite,
-						EnableRaisingEvents = true
-					};
-					LogWatcher.Changed += (sender, eventArgs) =>
-					{
-						wh.Set(); //<- Avisa que hay Cambios en el Archivo
-					};
-
-					//El archivo se abre en modo Compartido:
-					var fs = new FileStream(pFilePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-					using (var sr = new StreamReader(fs))
-					{
-						string Line = string.Empty;
-						while (JournalWatcherIsRunning) //<- Poner en False para dejar de Leer el Archivo
+						Line = sr.ReadLine(); //<- Lee Linea x Linea
+						if (!string.IsNullOrEmpty(Line))
 						{
-							Line = sr.ReadLine(); //<- Lee Linea x Linea
-							if (!string.IsNullOrEmpty(Line))
-							{
-                                //Analiza la Linea Buscando los Eventos deseados:
-								// los procesos aqui no cargan bien el archivo
-                               // System.Threading.Tasks.Task.Factory.StartNew(() => { PlayerJournal_DetectEvents(Line); });
-								PlayerJournal_DetectEvents(Line);
-							}
-							else
-							{
-								wh.WaitOne(1000); //<- Cuando ya no hay más lineas, pausa el proceso de lectura y Espera a que FileSystemWatcher notifique algun cambio
-							}
+							//Analiza la Linea Buscando los Eventos deseados:
+							// los procesos aqui no cargan bien el archivonal_DetectEvents(Line); });
+							PlayerJournal_DetectEvents(Line);
 						}
-						wh.Close();
-						LogWatcher.Dispose();
+						else
+						{
+							wh.WaitOne(1000); //<- Cuando ya no hay más lineas, pausa el proceso de lectura y Espera a que FileSystemWatcher notifique algun cambio
+						}
 					}
+					wh.Close();
+					LogWatcher.Dispose();
 				}
-				else
-				{
-					LogMessage(string.Format("ERROR 404 Journal file NOT FOUND '{0}'", pFilePath));
-				}
-			//});
+			}
+			else
+			{
+				LogMessage(string.Format("ERROR 404 Journal file NOT FOUND '{0}'", pFilePath));
+			}
 		}
 		private static void PlayerJournal_DetectEvents(string JsonLine)
 		{
 			/* AQUI SE LEEN LAS LINEAS NUEVAS DEL LOG Y SE DETECTAN LOS EVENTOS DESEADOS   */
-			// Esto sigue ejecutandose dentro del proceso iniciado x 'ReadPlayerJournal()'
 			try
 			{
 				/* https://elite-journal.readthedocs.io/en/latest/
@@ -393,8 +468,7 @@ namespace DXOverlay.ExternalModule
 
 				if (!string.IsNullOrEmpty(JsonLine))
 				{
-					//1. Buscar el Nombre del Jugador:
-					int index = 0;
+					int index = 0; // Get the Player's Name
 					index = JsonLine.IndexOf("\"event\":\"Commander\"", index);
 					if (index != -1) //<- Event Detected!
 					{
@@ -405,8 +479,7 @@ namespace DXOverlay.ExternalModule
 						}
 					}
 
-					//2. Detectar cuando se Cambia la Nave:
-					index = 0;
+					index = 0; // when loading from main menu or when embarking or switching ships
 					index = JsonLine.IndexOf("\"event\":\"Loadout\"", index);
 					if (index != -1)
 					{
@@ -414,30 +487,6 @@ namespace DXOverlay.ExternalModule
 						if (data != null)
 						{
 							LogMessage(string.Format("Ship Loadout: {0} ({1} {2})", (data.Ship is null ? string.Empty : data.Ship), data.ShipName, data.ShipIdent));
-						}
-					}
-
-					//3. Detectar cuando se lanza el SRV:
-					index = 0;
-					index = JsonLine.IndexOf("\"event\":\"LaunchSRV\"", index);
-					if (index != -1)
-					{
-						dynamic data = JObject.Parse(JsonLine);
-						if (data != null)
-						{
-							LogMessage(string.Format("LaunchSRV Event: {0} ({1})", data.SRVType, data.SRVType_Localised));
-						}
-					}
-
-					//4. Detectar cuando Vuelve a la nave desde el SRV:
-					index = 0;
-					index = JsonLine.IndexOf("\"event\":\"DockSRV\"", index);
-					if (index != -1)
-					{
-						dynamic data = JObject.Parse(JsonLine);
-						if (data != null)
-						{
-							LogMessage(string.Format("DockSRV Event: {0} ({1})", data.SRVType, data.SRVType_Localised));
 						}
 					}
 
@@ -468,10 +517,14 @@ namespace DXOverlay.ExternalModule
 					index = JsonLine.IndexOf("\"event\":\"FSDJump\"", index);
 					if (index != -1)
 					{
+						List<dynamic> SystemInformation = new List<dynamic>();
+
 						dynamic data = JObject.Parse(JsonLine);
 						if (data != null)
 						{
 							LogMessage(string.Format("FSDJump Event: {0} ({1}ly)", data.StarSystem, data.JumpDist));
+
+							#region Data Gathering
 
 							DataToShow = new List<dynamic>();
 							DataToShow.Add(new { SystemInfo = "Allegiance:", Value = data.SystemAllegiance });
@@ -523,8 +576,107 @@ namespace DXOverlay.ExternalModule
 								});
 							}
 
-							//This data will be shown by the Render method.
-							BlueDataTable = new TextDataTable
+							string EDSM_SYSTEM_API = @"https://www.edsm.net/api-v1/system/";        //?systemName = GCRV 1568 &showId=1 &showInformation=1 &showPrimaryStar=1
+							string EDSM_BODIES_API = @"https://www.edsm.net/api-system-v1/bodies";  //?systemName = GCRV 1568							
+							string EDSM_STATIONS_API = @"https://www.edsm.net/api-system-v1/stations";    //?systemName = GCRV 1568
+
+							string system_name_url = string.Format("&systemName={0}", Convert.ToString(data.StarSystem).Replace(" ", "%20"));
+							string FullURLrequest = string.Empty;
+
+							// Get The Stations in the System:			
+							FullURLrequest = string.Format("{0}{1}{2}", EDSM_STATIONS_API, "?", system_name_url);
+							LogMessage(FullURLrequest);
+							string Response = Send_WEB_Request(FullURLrequest, "GET");
+							if (!string.IsNullOrEmpty(Response))
+							{
+								//LogMessage(Response);
+
+								dynamic stations_data = JObject.Parse(Response);
+								//dynamic SystemsInfo = Newtonsoft.Json.Linq.JArray.Parse(Response);
+
+								if (stations_data != null && stations_data.stations != null)
+								{
+									foreach (var station in stations_data.stations)
+									{
+										if (station.type != "Fleet Carrier")
+										{
+											string Observaciones = string.Empty;
+											if (station.haveShipyard == true) Observaciones += "Shipyard, ";
+											if (station.haveOutfitting == true) Observaciones += "Outfitting, ";
+											if (station.haveMarket == true) Observaciones += "Market, ";
+
+											if (station.otherServices != null)
+											{
+												foreach (string item in station.otherServices)
+												{
+													if (item.ToString().Contains("Trader")) Observaciones += item;
+												}
+											}
+											SystemInformation.Add(new
+											{
+												Type = station.type,
+												Name = station.name,
+												Distance = station.distanceToArrival,
+												Subtype = station.economy,
+												Observations = Observaciones,
+												Related = station.allegiance
+											});
+										}
+									}
+								}
+							}
+
+							// Get the Bodies in the System:
+							FullURLrequest = string.Format("{0}{1}{2}", EDSM_BODIES_API, "?", system_name_url);
+							LogMessage(FullURLrequest);
+							Response = Send_WEB_Request(FullURLrequest, "GET");
+							if (!string.IsNullOrEmpty(Response))
+							{
+								dynamic bodies_data = JObject.Parse(Response);
+								if (bodies_data != null && bodies_data.bodies != null)
+								{
+									foreach (var body in bodies_data.bodies)
+									{
+										string Observaciones = string.Empty;
+										if (body.type == "Star")
+										{
+											if ((bool)body.isScoopable) Observaciones += "Scoopable, ";
+											if ((bool)body.isMainStar) Observaciones += "Main Star ";
+										}
+										if (body.type == "Planet")
+										{
+											//2 Rings: Rocky, Metal Rich
+											int RingCount = 0;
+											if (body.rings != null)
+											{
+												foreach (var ring in body.rings)
+												{
+													Observaciones += ring.type + ", ";
+													RingCount++;
+												}
+												Observaciones = string.Format("{0} Rings: {1}", RingCount, Observaciones);
+											}
+										}
+
+										SystemInformation.Add(new
+										{
+											Type = body.type,
+											Name = body.name,
+											Distance = body.distanceToArrival,
+											Subtype = body.subType,
+											Observations = Observaciones,
+											Related = string.Empty
+										});
+									}
+								}
+							}
+
+							#endregion
+
+							#region Data Formating
+
+							//This arranges the data into a Table
+							var BlueDataTable = new TextDataTable
 							{
 								TConfiguration = new TableConfiguration()
 								{
@@ -556,8 +708,102 @@ namespace DXOverlay.ExternalModule
 							BlueDataTable.TConfiguration.properties.table.column_headers.Visible = false;
 							BlueDataTable.TConfiguration.properties.table.data_rows.colors.backcolor_argb = "150, 0, 0, 10";
 
-							TextToShow = BlueDataTable.Build_TextDataTable();
-							//ImageToShow = BlueDataTable.Build_ImageDataTable(new Size(630, 500)).ToByteArray();
+							#endregion
+
+							// Build the data into a Text String:
+							//TextToShow = BlueDataTable.Build_TextDataTable();
+
+							// Build the data into an Image:
+							ImageToShow = GraphicRender.BitmapFromBitmap(BlueDataTable.Build_ImageDataTable(new Size(630, 500)));
+
+							if (SystemInformation != null)
+							{
+								//LogMessage(Newtonsoft.Json.JsonConvert.SerializeObject(SystemInformation, Newtonsoft.Json.Formatting.Indented));
+
+								List<dynamic> SystemInfoResume = new List<dynamic>();
+
+								#region Resume about the Stars in the System
+								
+								var Stars = ((IEnumerable)SystemInformation)
+									.Cast<dynamic>()
+									.Where(p => p.Type == "Star")
+									.ToList();
+
+								foreach (var star in Stars)
+                                {
+									SystemInfoResume.Add(new
+									{
+										InSystem = string.Format("Stars ({0})", Stars.Count),
+										Info = star.Subtype + star.Observations
+									});
+								}
+
+								#endregion
+
+								#region Resume about the Planets in the System
+								
+								var Planets = ((IEnumerable)SystemInformation)
+									.Cast<dynamic>()
+									.Where(p => p.Type == "Planet")
+									.ToList();
+
+								var GPlanets = ((IEnumerable)Planets)
+									.Cast<dynamic>()
+									.GroupBy(x => x.Subtype)
+									.ToList();
+
+								var GRings = ((IEnumerable)Planets)
+									.Cast<dynamic>()
+									.Where(p => !string.IsNullOrEmpty(p.Observations))
+									.ToList();
+
+								foreach (var planet in GPlanets)
+								{
+									var Details = planet.ToList();
+									SystemInfoResume.Add(new
+									{
+										InSystem = string.Format("Planets ({0})", Planets.Count),
+										Info = string.Format("{0} ({1})", planet.Key, Details.Count)
+									});
+								}
+                                foreach (var ring in GRings)
+                                {
+									//var Details = ring.ToList();
+									SystemInfoResume.Add(new
+									{
+										InSystem = string.Format("Rings ({0})", GRings.Count),
+										Info = string.Format("{0} ({1})", ring.Name, ring.Observations)
+									});
+								}
+
+								#endregion
+
+								#region Resume about the Stations in the System
+
+								var Stations = ((IEnumerable)SystemInformation)
+									.Cast<dynamic>()
+									.Where(p => p.Type != "Star" && p.Type != "Planet")
+									.ToList();
+
+								var GStations = ((IEnumerable)Stations)
+									.Cast<dynamic>()
+									.GroupBy(x => x.Type)
+									.ToList();
+
+								foreach (var station in GStations)
+								{
+									var Details = station.ToList();
+									SystemInfoResume.Add(new
+									{
+										InSystem = string.Format("Stations ({0})", Stations.Count),
+										Info = string.Format("{0} ({1})", station.Key, Details.Count)
+									});
+								}
+
+								#endregion
+
+								LogMessage(Newtonsoft.Json.JsonConvert.SerializeObject(SystemInfoResume, Newtonsoft.Json.Formatting.Indented));
+							}
 
 							LogMessage("FSDJump ready to show");
 						}
@@ -574,6 +820,19 @@ namespace DXOverlay.ExternalModule
 		}
 
 
+	}
+
+	public class key_value
+	{
+		public key_value() { }
+		public key_value(string Key, string Value)
+		{
+			this.key = Key;
+			this.value = Value;
+		}
+
+		public string key { get; set; }
+		public string value { get; set; }
 	}
 }
 

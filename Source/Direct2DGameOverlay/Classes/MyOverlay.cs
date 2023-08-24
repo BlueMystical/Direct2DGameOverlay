@@ -333,38 +333,53 @@ namespace DirectXOverlay
 							//This calls External Code:
 							if (!string.IsNullOrEmpty(layer.Value.CallBackCodeFile))
 							{
-								//DESA:
-								//if (layer.Value.Executing == false)
-								if (layer.Value.ExternalModule is null && layer.Value.Executing == false)
-								{
-									// Here we load and Compile the External Module:
-									string _Mpath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "modules", "code", layer.Value.CallBackCodeFile);
-									if (File.Exists(_Mpath))
-									{
-										//DESA:
-										//DXOverlay.ExternalModule.Programa.Initialize(layer.Value.CallBackCodeFile, _Brushes, _Fonts, _Textures);
-
-										layer.Value.CallBackCode = Helper.ReadTextFile(_Mpath, Helper.TextEncoding.UTF8);
-										if (!string.IsNullOrEmpty(layer.Value.CallBackCode))
-										{
-											layer.Value.ExternalModule = new DXOverlay.ExternalModule.CodeCompiler(layer.Value.CallBackCode);
-											if (layer.Value.ExternalModule != null)
-											{
-												layer.Value.ExternalModule.Initialize(layer.Value.CallBackCodeFile, _Brushes, _Fonts, _Textures);
-											}
-										}
-
-										layer.Value.Executing = true;
-									}
-								}
-								else
-								{
-									// Here we call the 'Render' method from the External Module
+								//var t = System.Threading.Tasks.Task.Factory.StartNew(delegate
+								//{
 									//DESA:
-									//DXOverlay.ExternalModule.Programa.Render(this.OverlayWindow, this.OverlayWindow.Graphics);
+									if (layer.Value.Executing == false)
+									//if (layer.Value.ExternalModule is null && layer.Value.Executing == false)
+									{
+										// Here we load and Compile the External Module:
+										string _Mpath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "modules", "code", layer.Value.CallBackCodeFile);
+										if (File.Exists(_Mpath))
+										{
+											//DESA:
+											DXOverlay.ExternalModule.Programa.Initialize(layer.Value.CallBackCodeFile, this.OverlayWindow, this.OverlayWindow.Graphics, _Brushes, _Fonts, _Textures);
+											//layer.Value.CallBackCode = Helper.ReadTextFile(_Mpath, Helper.TextEncoding.UTF8);
+											//if (!string.IsNullOrEmpty(layer.Value.CallBackCode))
+											//{
+											//	layer.Value.ExternalModule = new DXOverlay.ExternalModule.CodeCompiler(layer.Value.CallBackCode);
+											//	if (layer.Value.ExternalModule != null)
+											//	{
+											//		layer.Value.ExternalModule.Initialize(													
+											//			layer.Value.CallBackCodeFile,
+											//			this.OverlayWindow, this.OverlayWindow.Graphics,
+											//			_Brushes, 
+											//			_Fonts, 
+											//			_Textures);
+											//	}
+											//}
 
-									layer.Value.ExternalModule?.RenderCode(this.OverlayWindow, this.OverlayWindow.Graphics);
-								}
+											layer.Value.Executing = true;
+										}
+									}
+									else
+									{
+										// Here we call the 'Render' method from the External Module
+										//DESA:
+										DXOverlay.ExternalModule.Programa.Render();
+										//_ = (MethodInvoker)(() => DXOverlay.ExternalModule.Programa.Render());
+										//_ = ((MethodInvoker)(() =>
+										//{
+										//	DXOverlay.ExternalModule.Programa.Render();
+										//	Console.WriteLine("Rendered.");
+										//}));
+
+
+
+										//layer.Value.ExternalModule?.RenderCode();
+									}
+								//});
 							}
 						}
 						else

@@ -402,7 +402,12 @@ namespace DirectXOverlay
 					_modControl.AvailableFonts = d3DOverlay.Fonts;
 					_modControl.AvailableTextures = d3DOverlay.Textures;					
 				}
-            }
+
+				BeginInvoke(new Action(() => {
+					
+				}));
+
+			}
 			catch (Exception ex)
 			{
 				MessageBox.Show(ex.Message + ex.StackTrace, "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -637,65 +642,6 @@ namespace DirectXOverlay
 				MessageBox.Show(ex.Message + ex.StackTrace, "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
 			}
 			return _ret;
-		}
-
-		public void GetGPUinfo()
-		{
-			try
-			{
-				// Gets temperature info from OS and prints it to the console
-				//PerformanceCounter perfCount = new PerformanceCounter("Processor", "% Processor Time", "_Total");
-				//PerformanceCounter tempCount = new PerformanceCounter("Thermal Zone Information", "Temperature", @"\_TZ.THRM");
-				var gpuCounters = Helper.GetGPUCounters();
-				while (true)
-				{
-					try
-					{
-						//var gpuCounters = Helper.GetGPUCounters();
-						var gpuUsage = Helper.GetGPUUsage(gpuCounters);
-						Console.WriteLine(string.Format("GPU Use: {0:n2}%", gpuUsage));
-
-						continue;
-					}
-					catch { }
-
-					Thread.Sleep(1000);
-				}
-			}
-			catch (Exception ex)
-			{
-				MessageBox.Show(ex.Message + ex.StackTrace, "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
-			}
-		}
-
-		public void DrawGrid(DirectXOverlayWindow OverlayWindow, Direct2DRenderer Graphics)
-		{
-			try
-			{
-				var _overlay = d3DOverlay.OverlayWindow;
-				var gFx = d3DOverlay.OverlayWindow.Graphics;
-
-				var _gridBounds = new System.Drawing.Rectangle(20, 60, _overlay.Width - 20, _overlay.Height - 20);
-				var _gridGeometry = gFx.CreateGeometry();
-
-				for (float x = _gridBounds.Left; x <= _gridBounds.Right; x += 20)
-				{
-					_gridGeometry.BeginLine(new Point((int)x, _gridBounds.Top), new Point((int)x, _gridBounds.Bottom));
-					_gridGeometry.EndFigure(false);
-				}
-
-				for (float y = _gridBounds.Top; y <= _gridBounds.Bottom; y += 20)
-				{
-					_gridGeometry.BeginLine(new Point(_gridBounds.Left, (int)y), new Point(_gridBounds.Right, (int)y));
-					_gridGeometry.EndFigure(false);
-				}
-				_gridGeometry.Close();
-				gFx.DrawGeometry(_gridGeometry, 1, 1.0f);
-			}
-			catch (Exception ex)
-			{
-				MessageBox.Show(ex.Message + ex.StackTrace, "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
-			}
 		}
 		
 		private void mnuLoadMudules_Click(object sender, EventArgs e)

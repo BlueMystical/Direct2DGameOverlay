@@ -104,17 +104,26 @@ namespace DXOverlay.ExternalModule
 
 		/// <summary>[To be called from the Overlay] Sets all the available resources and leaves a log</summary>
 		/// <param name="pModuleName">Name of this module</param>
+		/// <param name="OverlayWindow">A reference to the Overlay Window</param>
+		/// <param name="Graphics">A reference to the Graphics Device who has the drawing methods.</param>
 		/// <param name="_brushes">List of Available Colors</param>
 		/// <param name="_fonts">List of Available Fonts</param>
 		/// <param name="_textures">List of Available Images</param>
-		internal void Initialize(string pModuleName, Dictionary<string, int> brushes, Dictionary<string, int> fonts, Dictionary<string, int> textures)
+		internal void Initialize(string pModuleName, DirectXOverlayWindow pOverlayWindow, Direct2DRenderer pGraphics, Dictionary<string, int> brushes, Dictionary<string, int> fonts, Dictionary<string, int> textures)
 		{
 			if (program != null)
 			{
 				MethodInfo func = program.GetMethod("Initialize");
 				if (func != null)
 				{
-					object result = func.Invoke(null, new object[] { Path.GetFileNameWithoutExtension(pModuleName), brushes, fonts, textures, true });
+					object result = func.Invoke(null, new object[] //<- Multiples parametros 
+					{ 
+						Path.GetFileNameWithoutExtension(pModuleName),
+						pOverlayWindow, pGraphics,
+						brushes, fonts, 
+						textures, true 
+					});
+					
 					if (result != null)
 					{
 						if (results.Errors != null && results.Errors.Count > 0)
@@ -132,9 +141,7 @@ namespace DXOverlay.ExternalModule
 
 		/// <summary>This calls the 'Render' method in the External Module who will draw stuff on the current layer.
 		/// This method is called from the Parent Overlay once per rendered frame, which means around 60 times per second.</summary>
-		/// <param name="OverlayWindow">A reference to the Overlay Window</param>
-		/// <param name="Graphics">A reference to the Graphics Device who has the drawing methods.</param>
-		public bool RenderCode(DirectXOverlayWindow OverlayWindow, Direct2DRenderer Graphics)
+		public bool RenderCode()
 		{
 			bool _ret = false;
 			if (results != null)
@@ -156,7 +163,7 @@ namespace DXOverlay.ExternalModule
 						MethodInfo func = program.GetMethod("Render"); //<- Nombre de un Metodo (o Funcion) a invocar
 						if (func != null)
 						{
-							object result = func.Invoke(null, new object[] { OverlayWindow, Graphics }); //<- Multiples parametros 
+							object result = func.Invoke(null, null); //<- NO parametros 
 							if (result != null)
 							{
 								string _Response = Convert.ToString(result);
