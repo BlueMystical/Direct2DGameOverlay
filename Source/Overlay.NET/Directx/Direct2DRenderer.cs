@@ -15,6 +15,7 @@ using AlphaMode = SharpDX.Direct2D1.AlphaMode;
 using Color = System.Drawing.Color;
 using Factory = SharpDX.DirectWrite.Factory;
 using Image = Overlay.NET.Common.Image;
+using PixelFormat = SharpDX.Direct2D1.PixelFormat;
 using TextAntialiasMode = SharpDX.Direct2D1.TextAntialiasMode;
 
 namespace Overlay.NET.Directx
@@ -1580,16 +1581,7 @@ namespace Overlay.NET.Directx
 
 
 
-		/// <summary>Draw a pre-loaded Texture on the Destination Box.</summary>
-		/// <param name="TextureIndex">Index of the preloaded texture</param>
-		/// <param name="box">Location and Size for the image.</param>
-		/// <param name="pOpacity">Transparency: 0.0-1.0</param>
-		public void DrawTexture(int TextureIndex, System.Drawing.Rectangle box, float pOpacity)
-        {
-            RawRectangleF RF = new RawRectangleF(box.X, box.Y, box.X + box.Width, box.Y + box.Height);
-
-            _device.DrawBitmap(_TextureContainer[TextureIndex], RF, pOpacity, BitmapInterpolationMode.Linear, null);
-		}
+		
 
         /// <summary>
         ///     Do not buffer text if you draw i.e. FPS. Use buffer for player names, rank....
@@ -1862,6 +1854,16 @@ namespace Overlay.NET.Directx
 		}
 
 
+		/// <summary>Draw a pre-loaded Texture on the Destination Box.</summary>
+		/// <param name="TextureIndex">Index of the preloaded texture</param>
+		/// <param name="box">Location and Size for the image.</param>
+		/// <param name="pOpacity">Transparency: 0.0-1.0</param>
+		public void DrawTexture(int TextureIndex, System.Drawing.Rectangle box, float pOpacity)
+		{
+			RawRectangleF RF = new RawRectangleF(box.X, box.Y, box.X + box.Width, box.Y + box.Height);
+
+			_device.DrawBitmap(_TextureContainer[TextureIndex], RF, pOpacity, BitmapInterpolationMode.Linear, null);
+		}
 
 		/// <summary>
 		/// Draws an image to the given position and optional applies an alpha value.
@@ -1870,7 +1872,7 @@ namespace Overlay.NET.Directx
 		/// <param name="x">The x-coordinate upper-left corner of the image.</param>
 		/// <param name="y">The y-coordinate upper-left corner of the image.</param>
 		/// <param name="opacity">A value indicating the opacity of the image. (alpha)</param>
-		public void DrawImage(Image image, float x, float y, float opacity = 1.0f)
+		public void DrawImage(Overlay.NET.Common.Image image, float x, float y, float opacity = 1.0f)
 		{
 			if (!IsDrawing) throw ThrowHelper.UseBeginScene();
 
@@ -1878,21 +1880,91 @@ namespace Overlay.NET.Directx
 			float destBottom = y + image.Bitmap.PixelSize.Height;
 
 			_device.DrawBitmap(
-				image.Bitmap,
+				image,
 				new RawRectangleF(x, y, destRight, destBottom),
 				opacity,
-				BitmapInterpolationMode.Linear);
+				BitmapInterpolationMode.Linear, 
+				null);
 		}
 
-		/// <summary>
-		/// Draws an image to the given position and optional applies an alpha value.
-		/// </summary>
+		/// <summary>Draws an image to the given position and optional applies an alpha value.</summary>
 		/// <param name="image">The Image to be drawn.</param>
-		/// <param name="location">A Point structure inclduing the position of the upper-left corner of the image.</param>
-		/// <param name="opacity">A value indicating the opacity of the image. (alpha)</param>
-		public void DrawImage(Image image, Point location, float opacity = 1.0f)
-			=> DrawImage(image, location.X, location.Y, opacity);
+		/// <param name="box">Location and Size of the Image</param>
+		/// <param name="opacity">A value indicating the opacity of the image (alpha). Value Range: [0.0 to 1.0]</param>
+		/// <param name="linearScale"></param>
+		public void DrawImage(SharpDX.Direct2D1.Bitmap image, System.Drawing.Rectangle box, float opacity = 1.0f, bool linearScale = true)
+		{
+			if (!IsDrawing) throw ThrowHelper.UseBeginScene();
 
+			_device.DrawBitmap(
+				image,
+				new RawRectangleF(box.X, box.Y, box.Right, box.Bottom),
+				opacity,
+				linearScale ? BitmapInterpolationMode.Linear : BitmapInterpolationMode.NearestNeighbor,
+				new RawRectangleF(0, 0, image.PixelSize.Width, image.PixelSize.Height));
+		}
+
+		public SharpDX.Direct2D1.Bitmap BitmapFromBytes(byte[] bytes, RawRectangle Box, float dpi = 0.0f)
+		{
+			var BProps = new BitmapProperties() 
+			{ 
+				PixelFormat = new PixelFormat(Format.B8G8R8A8_UNorm, AlphaMode.Straight),
+				DpiX = dpi,
+				DpiY = dpi
+			};
+
+			var pixelRect = new RawRectangle(Box.Left, Box.Top, Box.Right, Box.Bottom);
+			var pixelSize = new Size2(pixelRect.Right - pixelRect.Left, pixelRect.Bottom - pixelRect.Top);
+			var newBitmap = new	Bitmap(_device, pixelSize, BProps);
+
+			Overlay.NET.Common.Image image = new Image(_device, bytes);
+
+			newBitmap.CopyFromBitmap(image.Bitmap, new RawPoint(0, 0), pixelRect);
+			return newBitmap;
+		}
+
+		/// <summary>Gets a Direct2D Bitmap from an Standard Bitmap.</summary>
+		/// <param name="bmp">Image to convert.</param>
+		public SharpDX.Direct2D1.Bitmap BitmapFromBitmap(System.Drawing.Bitmap bmp)
+		{
+			var RawBitmap = (System.Drawing.Bitmap)bmp.Clone();
+			var _width = bmp.Width;
+			var _height = bmp.Height;
+
+			System.Drawing.Rectangle sourceArea =
+				new System.Drawing.Rectangle(0, 0, bmp.Width, bmp.Height);
+
+			var bitmapProperties = new BitmapProperties(
+				new SharpDX.Direct2D1.PixelFormat(Format.R8G8B8A8_UNorm, AlphaMode.Premultiplied), 0.0f, 0.0f);  // 0.0f, default dpi
+
+			var size = new Size2(bmp.Width, bmp.Height);
+
+			int stride = bmp.Width * sizeof(int);
+
+			using (var tempStream = new DataStream(bmp.Height * stride, true, true))
+			{
+				BitmapData bitmapData = bmp.LockBits(sourceArea, ImageLockMode.ReadOnly,
+													 System.Drawing.Imaging.PixelFormat.Format32bppPArgb);
+
+				for (int y = 0; y < bmp.Height; y++)
+				{
+					int offset = bitmapData.Stride * y;
+					for (int x = 0; x < bmp.Width; x++)
+					{
+						byte b = Marshal.ReadByte(bitmapData.Scan0, offset++);
+						byte g = Marshal.ReadByte(bitmapData.Scan0, offset++);
+						byte r = Marshal.ReadByte(bitmapData.Scan0, offset++);
+						byte a = Marshal.ReadByte(bitmapData.Scan0, offset++);
+						int rgba = r | (g << 8) | (b << 16) | (a << 24);
+						tempStream.Write(rgba);
+					}
+				}
+				bmp.UnlockBits(bitmapData);
+				tempStream.Position = 0;
+
+				return new Bitmap(_device, size, tempStream, stride, bitmapProperties);
+			}
+		}
 
 		#endregion
 	}
